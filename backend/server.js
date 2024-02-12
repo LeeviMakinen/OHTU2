@@ -26,7 +26,7 @@ db.connect(function(err){
 
 app.get('/',(re,res)=>{
 
-    return res.json("Bäkkärin autokaista päivää")
+    return res.json('Bäkkärin autokaista päivää')
 } )
 
 app.get('/ukot', (req,res)=>{
