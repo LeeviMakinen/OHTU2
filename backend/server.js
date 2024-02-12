@@ -13,7 +13,7 @@ const db =mysql.createConnection({
 
     host: "localhost",
     user: 'root',
-    password: 'toot', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
+    password: 'A', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
     database: 'testi'
 
 });
@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS ukot (
 );
 
 -- Lisää muutama rivi tauluun 'ukot'
-INSERT INTO ukot (nimi, ika) VALUES ('Matti', 30);
-INSERT INTO ukot (nimi, ika) VALUES ('Teppo', 35);
-INSERT INTO ukot (nimi, ika) VALUES ('Seppo', 40);
+INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Matti', 30);
+INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Teppo', 35);
+INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Seppo', 40);
 
 
  */
