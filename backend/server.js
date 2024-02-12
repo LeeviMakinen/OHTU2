@@ -13,10 +13,34 @@ const db =mysql.createConnection({
 
     host: "localhost",
     user: 'root',
-    password: 'toot',
+    password: 'toot', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
     database: 'testi'
 
 });
+
+/*
+
+TIET0KANTASKRIPTI DEMOAMISTA VARTEN
+-- Luo tietokanta, jos sitä ei ole olemassa
+CREATE DATABASE IF NOT EXISTS testi;
+
+-- Käytä luotua tietokantaa
+USE testi;
+
+-- Luo taulu 'ukot', jos sitä ei ole olemassa
+CREATE TABLE IF NOT EXISTS ukot (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nimi VARCHAR(255),
+    Osumia_kaveriin INT
+);
+
+-- Lisää muutama rivi tauluun 'ukot'
+INSERT INTO ukot (nimi, ika) VALUES ('Matti', 30);
+INSERT INTO ukot (nimi, ika) VALUES ('Teppo', 35);
+INSERT INTO ukot (nimi, ika) VALUES ('Seppo', 40);
+
+
+ */
 
 db.connect(function(err){
     if(err) console.log("Tilanne seis");
