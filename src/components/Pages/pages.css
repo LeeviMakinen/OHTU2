@@ -59,3 +59,13 @@ h1{
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
     text-align: center;
 }
+label {
+    color: white;
+}
+h2{
+    width: fit-content;
+    border-collapse: collapse;
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    text-align: center;
+}

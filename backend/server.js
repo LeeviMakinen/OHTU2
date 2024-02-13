@@ -13,7 +13,7 @@ const db =mysql.createConnection({
 
     host: "localhost",
     user: 'root',
-    password: 'A', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
+    password: 'toot', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
     database: 'testi'
 
 });
@@ -73,6 +73,28 @@ app.post('/lisaarivi', (req,res) => {
     })
 
 })
+
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    let tulos;
+    db.query('SELECT * FROM tunnukset WHERE user = ? AND pass= ?', [username,password], (error, results) => {
+        if (error) {
+            res.status(500).json({error: 'Solmuun meni'});
+            return;
+        }
+        if (results.length === 1){
+            res.status(200).json({message:"Tuttu mies"});
+        }
+        if (results.length === 0) {
+            res.status(401).json({error: "Väärä salasana tahi ukko"});
+        }
+
+    });
+
+
+
+});
 
 
 app.listen(8081, ()=>{

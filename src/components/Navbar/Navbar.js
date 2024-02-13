@@ -19,6 +19,10 @@ const Navbar = () => {
                         Tietokanta
                     </NavLink>
 
+                    <NavLink to={"/kalenteri"} activeStyle>
+                        Kalenteri
+                    </NavLink>
+
                 </NavMenu>
             </Nav>
         </>

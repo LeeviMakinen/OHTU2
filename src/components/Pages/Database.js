@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import '../../App.css';
+import './/pages.css';
+import ".//layout";
 
 
 
@@ -92,6 +93,7 @@ function Database() {
 
     return (
         <div>
+
             <h1 className={"heading"}>Backend data fetch test</h1>
             <table>
                 <thead>
@@ -114,33 +116,26 @@ function Database() {
 
             <div>
                 <form onSubmit={handleSubmit}>
-                    <label>
-                        ID:
+
                         <input
                             placeholder={"ID"}
                             type={"text"}
                             value={id}
                             onChange={handleIDChange}
                         />
-                    </label>
+
                     <br/>
-                    <label>
-                        Nimi:
                         <input placeholder={"Nimi"}
                                type={"text"}
                                value={nimi}
                                onChange={handleNameChange}
                         />
-                    </label>
                     <br/>
-                    <label>
-                        Osumat:
                         <input placeholder={"Osumat"}
                                type={"text"}
                                value={osumat}
                                onChange={handleOsumaChange}
                         />
-                    </label>
                     <br/>
                     <button type={"submit"}>Lähetä</button>
                 </form>
@@ -149,6 +144,7 @@ function Database() {
             <div>
                 <button onClick={handleDeletion}>Poista ID:llä</button>
             </div>
+
         </div>
     );
 }
