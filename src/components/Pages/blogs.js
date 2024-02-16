@@ -11,7 +11,7 @@ const Blogs = () => {
     <div className={"body"}>
         <h1>Tälle sivulle vissii metästystarinointia</h1>;
 
-        <img src={MrGeen} alt={"Turvallinen ja reilu MR GREEN!11"} className={"center"}/>
+        <img  className={"img2"} src={MrGeen} alt={"Turvallinen ja reilu MR GREEN!11"}/>
 
     </div>
     )

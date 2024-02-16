@@ -86,7 +86,11 @@ h2{
         opacity: 1;
     }
 }
-img {
+.img2 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
     animation: blink 1s;
     animation-iteration-count: infinite;
 }
