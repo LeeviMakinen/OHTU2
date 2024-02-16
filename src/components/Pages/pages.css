@@ -48,10 +48,7 @@ td {
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
-innerDiv {
-    padding-top: 50px;
 
-}
 h1{
     width: fit-content;
     border-collapse: collapse;
@@ -68,4 +65,28 @@ h2{
     color: white;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
     text-align: center;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+img {
+    animation: blink 1s;
+    animation-iteration-count: infinite;
 }
