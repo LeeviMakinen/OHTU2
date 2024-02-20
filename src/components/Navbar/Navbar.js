@@ -23,6 +23,10 @@ const Navbar = () => {
                         Kalenteri
                     </NavLink>
 
+                    <NavLink to={"/pelisali"} activeStyle>
+                        Pelisali
+                    </NavLink>
+
                 </NavMenu>
             </Nav>
         </>

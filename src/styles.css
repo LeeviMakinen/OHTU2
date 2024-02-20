@@ -5,9 +5,9 @@ body {
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
-    background-image: url("forest.jpg");
+    background-image: url("forestgif.gif");
     background-size: cover;
-    background-position: center;
+    //background-position: center;
     background-repeat: no-repeat;
     min-height: 100vh;
     display: flex;

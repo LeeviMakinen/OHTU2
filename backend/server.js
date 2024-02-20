@@ -68,7 +68,7 @@ app.post('/lisaarivi', (req,res) => {
     db.query(sqlStatement, (err,result) =>{
         if(err) {return res.status(500).json({error:err.message});}
 
-        console.log(result);
+        //console.log(result);
         res.json(result);
     })
 
