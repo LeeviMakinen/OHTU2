@@ -1,6 +1,6 @@
 import React from "react";
-import "./pages.css";
-import hirvipaa from "./hirvipaa.png";
+import "../pages.css";
+import hirvipaa from "./Kuvat/hirvipaa.png";
 const About = () => {
     return (
         <div>

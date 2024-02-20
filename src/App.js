@@ -12,7 +12,7 @@ import About from "./components/Pages/about";
 import Blogs from "./components/Pages/blogs";
 import Database from "./components/Pages/Database";
 import Kalenteri from "./components/Pages/kalenteri";
-import Pelisali from "./components/Pages/Pelisali";
+import Pelisali from "./components/Pages/MooseOfDead/Pelisali";
 
 import Layout from "./components/Pages/layout";
 import './styles.css'
