@@ -13,7 +13,7 @@ const db =mysql.createConnection({
 
     host: "localhost",
     user: 'root',
-    password: 'toot', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
+    password: 'Hur1ssalon5ale', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
     database: 'testi'
 
 });
@@ -85,23 +85,23 @@ app.post('/lisaarivi', (req,res) => {
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    let tulos;
-    db.query('SELECT * FROM tunnukset WHERE user = ? AND pass= ?', [username,password], (error, results) => {
-        if (error) {
-            res.status(500).json({error: 'Solmuun meni'});
-            return;
-        }
-        if (results.length === 1){
-            res.status(200).json({message:"Tuttu mies"});
-        }
-        if (results.length === 0) {
-            res.status(401).json({error: "Väärä salasana tahi ukko"});
-        }
 
+    // Query the database for user credentials
+    const sql = 'SELECT * FROM tunnukset WHERE user = ? AND pass = ?';
+    db.query(sql, [username, password], (err, result) => {
+        if (err) {
+            console.error('Database error:', err);
+            res.status(500).json({ success: false, message: 'Internal server error' });
+        } else {
+            if (result.length > 0) {
+
+                res.json({ success: true, user: result[0] });
+                return true;
+            } else {
+                res.status(401).json({ success: false, message: 'Invalid username or password' });
+            }
+        }
     });
-
-
-
 });
 
 
