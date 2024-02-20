@@ -2,13 +2,20 @@ import React from "react";
 import "./pages.css"
 
 
-const Home = () => {
+
+const index = () =>  {
+
+
+
+
     return (
+        <div>
+            <h1>Teretulemast</h1>
 
-       <div>
-           <h1>Teretulemast</h1>
-       </div>
+
+        </div>
     );
-};
+}
 
-export default Home;
+export default index;
+

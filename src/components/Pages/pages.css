@@ -1,10 +1,11 @@
 /* styles.css */
 
 .container {
-    display: flex;
+
     justify-content: center;
     align-items: center;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    color: aqua;
 
 }
 
@@ -20,6 +21,7 @@ body {
 }
 
 .heading {
+
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;

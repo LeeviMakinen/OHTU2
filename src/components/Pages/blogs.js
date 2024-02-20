@@ -9,7 +9,7 @@ const Blogs = () => {
     return(
 
     <div className={"body"}>
-        <h1>Tälle sivulle vissii metästystarinointia</h1>;
+        <h1>Tälle sivulle vissii metästystarinointia</h1>
 
         <img  className={"img2"} src={MrGeen} alt={"Turvallinen ja reilu MR GREEN!11"}/>
 

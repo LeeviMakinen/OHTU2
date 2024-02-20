@@ -1,64 +1,57 @@
-// Import necessary dependencies and components
-import React, { useState } from "react";
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Navigate,
-} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
-import Login from "./components/Pages/Login"; // Adjust the path as needed
+import Login from "./components/Pages/Login";
 import Home from "./components/Pages";
 import About from "./components/Pages/about";
 import Blogs from "./components/Pages/blogs";
 import Database from "./components/Pages/Database";
 import Kalenteri from "./components/Pages/kalenteri";
 import Pelisali from "./components/Pages/MooseOfDead/Pelisali";
+import './styles.css';
 
-import Layout from "./components/Pages/layout";
-import './styles.css'
-
-
-
-
-
-
-
-function App() {
+function App({ LoggedInState }) {
     // State to track the login status
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [isLoggedIn, setLoggedIn] = useState(() => {
+        // Load the logged-in state from localStorage
+        const loggedInState = localStorage.getItem("isLoggedIn");
+        return loggedInState && loggedInState !== "undefined" ? JSON.parse(loggedInState) : false;
+    });
+
+    // Save the logged-in state to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+    }, [isLoggedIn]);
 
     return (
         <Router>
-            <Navbar />
             <Routes>
-                {/* Use a conditional route for the login page */}
-                <Route
-                    path="/login"
-                    element={<Login setLoggedIn={setLoggedIn} />}
-                />
+                {/* Always render the login route */}
+                <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
 
-                {/* Use a conditional route for other pages */}
-                {isLoggedIn ? (
-                    // Routes accessible after successful login
-                    <>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/blogs" element={<Blogs />} />
-                        <Route path="/database" element={<Database />} />
-                        <Route path="/kalenteri" element={<Kalenteri />} />
-                        <Route path="/pelisali" element={<Pelisali />} />
-                    </>
-                ) : (
-                    // Render the login page content conditionally
-                    <Route to="/login" />
-                )}
+                {/* Conditional rendering of other routes based on isLoggedIn */}
+                <Route path="*" element={isLoggedIn ? <AuthenticatedRoutes /> : <Navigate to="/login" />} />
+
+
             </Routes>
         </Router>
     );
 }
 
-
-
+function AuthenticatedRoutes() {
+    return (
+        <>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/database" element={<Database />} />
+                <Route path="/kalenteri" element={<Kalenteri />} />
+                <Route path="/pelisali" element={<Pelisali />} />
+            </Routes>
+        </>
+    );
+}
 
 export default App;
