@@ -34,6 +34,14 @@ CREATE TABLE IF NOT EXISTS ukot (
     Osumia_kaveriin INT
 );
 
+CREATE TABLE IF NOT EXISTS `tunnukset` (
+  `user` text DEFAULT NULL,
+  `pass` text DEFAULT NULL
+);
+
+INSERT INTO `tunnukset` (`user`, `pass`) VALUES
+	('test dummy', 'demo');
+
 -- Lisää muutama rivi tauluun 'ukot'
 INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Matti', 30);
 INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Teppo', 35);
