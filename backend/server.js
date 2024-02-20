@@ -13,7 +13,7 @@ const db =mysql.createConnection({
 
     host: "localhost",
     user: 'root',
-    password: 'toot', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
+    password: 'A', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
     database: 'testi'
 
 });
@@ -76,12 +76,24 @@ app.post('/lisaarivi', (req,res) => {
     db.query(sqlStatement, (err,result) =>{
         if(err) {return res.status(500).json({error:err.message});}
 
-        //console.log(result);
+        console.log(result);
         res.json(result);
     })
 
 })
 
+app.post('/register', (req,res) => {
+    const {sqlStatement} = req.body;
+
+
+    db.query(sqlStatement, (err,result) =>{
+        if(err) {return res.status(500).json({error:err.message});}
+
+        console.log(result);
+        res.json(result);
+    })
+
+})
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;

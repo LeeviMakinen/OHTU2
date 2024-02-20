@@ -8,7 +8,9 @@ import Blogs from "./components/Pages/blogs";
 import Database from "./components/Pages/Database";
 import Kalenteri from "./components/Pages/kalenteri";
 import Pelisali from "./components/Pages/MooseOfDead/Pelisali";
+import Rekisteri from "./components/Pages/register"
 import './styles.css';
+import Navbar2 from "./components/Navbar/NavbarPreLogin";
 
 function App({ LoggedInState }) {
     // State to track the login status
@@ -25,10 +27,11 @@ function App({ LoggedInState }) {
 
     return (
         <Router>
+            <Navbar2 />
             <Routes>
                 {/* Always render the login route */}
                 <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
-
+                <Route path="/register" element={<Rekisteri/>} />
                 {/* Conditional rendering of other routes based on isLoggedIn */}
                 <Route path="*" element={isLoggedIn ? <AuthenticatedRoutes /> : <Navigate to="/login" />} />
 
@@ -49,6 +52,7 @@ function AuthenticatedRoutes() {
                 <Route path="/database" element={<Database />} />
                 <Route path="/kalenteri" element={<Kalenteri />} />
                 <Route path="/pelisali" element={<Pelisali />} />
+                <Route path="/register" element={<Rekisteri />} />
             </Routes>
         </>
     );
