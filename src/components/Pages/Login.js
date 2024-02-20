@@ -3,7 +3,7 @@ import "./pages.css"
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
-const Login = () => {
+const Login = ({setLoggedIn}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -21,7 +21,9 @@ const Login = () => {
             if (response.data.success) {
                 // Successful login
                 // You may want to store user data in state or context for global access
+                setLoggedIn(true)
                 console.log("Login successful:", response.data.user);
+
 
                 // Redirect to the home page or any other route after successful login
                 navigate("/");

@@ -13,7 +13,7 @@ const db =mysql.createConnection({
 
     host: "localhost",
     user: 'root',
-    password: 'Hur1ssalon5ale', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
+    password: 'A', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
     database: 'testi'
 
 });
@@ -94,9 +94,7 @@ app.post('/login', (req, res) => {
             res.status(500).json({ success: false, message: 'Internal server error' });
         } else {
             if (result.length > 0) {
-
                 res.json({ success: true, user: result[0] });
-                return true;
             } else {
                 res.status(401).json({ success: false, message: 'Invalid username or password' });
             }
