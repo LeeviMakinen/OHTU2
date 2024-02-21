@@ -95,7 +95,7 @@ function Database() {
 
 
     return (
-        <div>
+        <div className={"container"}>
 
             <h1 className={"heading"}>Backend data fetch test</h1>
             <table>

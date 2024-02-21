@@ -22,7 +22,7 @@ const Login = ({setLoggedIn}) => {
                 // Successful login
                 // You may want to store user data in state or context for global access
                 setLoggedIn(true)
-                console.log("Login successful:", response.data.user);
+                //console.log("Login successful:", response.data.user);
 
 
                 // Redirect to the home page or any other route after successful login

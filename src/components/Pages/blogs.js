@@ -8,7 +8,7 @@ import './pages.css';
 const Blogs = () => {
     return(
 
-    <div className={"body"}>
+    <div className={"container"}>
         <h1>Tälle sivulle vissii metästystarinointia</h1>
 
         <img  className={"img2"} src={MrGeen} alt={"Turvallinen ja reilu MR GREEN!11"}/>

@@ -27,9 +27,7 @@ const Navbar = () => {
                         Pelisali
                     </NavLink>
 
-                    <NavLink to={"/register"} activeStyle>
-                        Rekisteröidy
-                    </NavLink>
+
                 </NavMenu>
             </Nav>
         </>

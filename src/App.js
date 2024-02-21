@@ -11,10 +11,13 @@ import Pelisali from "./components/Pages/MooseOfDead/Pelisali";
 import Rekisteri from "./components/Pages/register"
 import './styles.css';
 import Navbar2 from "./components/Navbar/NavbarPreLogin";
+import Layout from "./components/Pages/layout";
+
+
 
 function App({ LoggedInState }) {
     // State to track the login status
-    const [isLoggedIn, setLoggedIn] = useState(() => {
+    let [isLoggedIn, setLoggedIn] = useState(() => {
         // Load the logged-in state from localStorage
         const loggedInState = localStorage.getItem("isLoggedIn");
         return loggedInState && loggedInState !== "undefined" ? JSON.parse(loggedInState) : false;
@@ -25,19 +28,30 @@ function App({ LoggedInState }) {
         localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
     }, [isLoggedIn]);
 
+    function handleLogOut(){
+
+        setLoggedIn(false);
+
+    }
+
     return (
+
         <Router>
-            <Navbar2 />
+
+            <Navbar2 isLoggedIn={isLoggedIn} handleLogOut={handleLogOut}/>
             <Routes>
+
                 {/* Always render the login route */}
-                <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
-                <Route path="/register" element={<Rekisteri/>} />
+                <Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>
+                <Route path="/register" element={<Rekisteri/>}/>
                 {/* Conditional rendering of other routes based on isLoggedIn */}
-                <Route path="*" element={isLoggedIn ? <AuthenticatedRoutes /> : <Navigate to="/login" />} />
+                <Route path="*" element={isLoggedIn ? <AuthenticatedRoutes/> : <Navigate to="/login"/>}/>
 
 
             </Routes>
+
         </Router>
+
     );
 }
 
@@ -45,6 +59,8 @@ function AuthenticatedRoutes() {
     return (
         <>
             <Navbar />
+            <Layout>
+
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
@@ -53,7 +69,9 @@ function AuthenticatedRoutes() {
                 <Route path="/kalenteri" element={<Kalenteri />} />
                 <Route path="/pelisali" element={<Pelisali />} />
                 <Route path="/register" element={<Rekisteri />} />
+
             </Routes>
+            </Layout>
         </>
     );
 }
