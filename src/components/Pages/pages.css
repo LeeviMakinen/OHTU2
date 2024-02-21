@@ -96,3 +96,7 @@ h2{
     animation: blink 1s;
     animation-iteration-count: infinite;
 }
+
+ul{
+    list-style-type: none;
+}
