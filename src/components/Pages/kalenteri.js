@@ -1,9 +1,22 @@
 
 
-import React from "react";
+import React, { useState, useCallback } from "react";
+import { Calendar } from "@natscale/react-calendar";
 
-const kalenteri = () => {
-    return <h1>Kalenterisivu WIP</h1>;
-};
+export default function CalendarGfg() {
+    const [value, setValue] = useState();
 
-export default kalenteri;
+    const onChange = useCallback(
+        (value) => {
+            setValue(value);
+        },
+        [setValue]
+    );
+
+    return (
+        <div>
+            <h1>Calendar - GeeksforGeeks</h1>
+            <Calendar value={value} onChange={onChange} />
+        </div>
+    );
+}
