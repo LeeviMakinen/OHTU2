@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import videotausta from "./forestvideo.mp4";
 const Register = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -52,8 +53,15 @@ const Register = () => {
 
     return (
         <div>
-            <h2>Rekisteröidy</h2>
-            <form onSubmit={handleSubmit}>
+            <div className={"contentBack"}>
+                <video src={videotausta} autoPlay loop muted/>
+            </div>
+
+
+
+
+        <h2>Rekisteröidy</h2>
+        <form className={"contentFront"} onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="username">Käyttäjänimi:</label>
                     <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
@@ -65,7 +73,9 @@ const Register = () => {
                 </div>
                 <button type="submit">Rekisteröidy</button>
             </form>
+
         </div>
+
     );
 };
 
