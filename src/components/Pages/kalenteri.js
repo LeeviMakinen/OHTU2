@@ -1,22 +1,23 @@
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
+function MyCalendar() {
+    const [date, setDate] = useState(new Date());
 
-import React, { useState, useCallback } from "react";
-import { Calendar } from "@natscale/react-calendar";
-
-export default function CalendarGfg() {
-    const [value, setValue] = useState();
-
-    const onChange = useCallback(
-        (value) => {
-            setValue(value);
-        },
-        [setValue]
-    );
+    const onChange = (date) => {
+        setDate(date);
+    };
 
     return (
         <div>
-            <h1>Calendar - GeeksforGeeks</h1>
-            <Calendar value={value} onChange={onChange} />
+            <h1>My Calendar</h1>
+            <Calendar
+                onChange={onChange}
+                value={date}
+            />
         </div>
     );
 }
+
+export default MyCalendar;
