@@ -1,22 +1,24 @@
 /* styles.css */
 
 .container {
-
-    justify-content: center;
-    align-items: center;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-    color: aqua;
+    color: #ffffff;
     margin: auto;
     width: 50%;
-    padding: 10px;
 
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    min-height: 50px;
 }
 
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
+
+
+    margin: auto;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -56,7 +58,8 @@ td {
 
 h1{
     width: fit-content;
-    border-collapse: collapse;
+    height: auto;
+
     color: white;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
     text-align: center;
@@ -70,6 +73,10 @@ h2{
     color: white;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
     text-align: center;
+}
+.img{
+    max-width: 100%;
+    height: auto;
 }
 
 .center {
@@ -111,4 +118,84 @@ ul{
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+
+
+
+.contentBack{
+    z-index: 0;
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.contentBack video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.contentFront{
+    position: relative;
+    z-index: 3; /* Set the z-index higher than the behind div */
+    max-width: 100%;
+    height: auto;
+}
+
+
+.navbar {
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+}
+
+.menu-button {
+    align-items: center;
+    display: none; /* Oletuksena piilossa isoilla näytöillä */
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+
+    background-color: #25501d;
+    text-shadow: #dddddd;
+    padding: 8px 16px;
+    opacity: 1;
+    border: #7f7b7f;
+    cursor: pointer;
+    border-radius: 30%;
+
+}
+
+.menu {
+    display: none; /* Oletuksena piilossa pienellä näytöllä */
+}
+
+@media screen and (max-width: 768px) {
+    .menu-button {
+        display: block; /* Show menu button on smaller screens */
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #25501d;
+        text-shadow: #dddddd;
+        padding: 8px 16px;
+        opacity: 1;
+
+        cursor: pointer;
+        border-radius: 20%;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .navbar {
+        justify-content: center; /* Adjust alignment for menu button */
+    }
 }

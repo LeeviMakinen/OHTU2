@@ -8,7 +8,7 @@ const About = () => {
             <h1>
                 Pojat on hirvimetälle lähtenä
             </h1>
-            <img src={kuva} alt={""}/>
+            <img className={"img"} src={kuva} alt={""}/>
         </div>
     );
 };

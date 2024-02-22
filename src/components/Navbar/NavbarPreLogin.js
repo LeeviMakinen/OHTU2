@@ -8,7 +8,7 @@ const Navbar2 = ({ isLoggedIn, handleLogOut }) => {
 
 
     return (
-        <>
+        <div className={"contentFront"}>
             <Nav>
                 <NavMenu>
                     {isLoggedIn ? (
@@ -25,7 +25,7 @@ const Navbar2 = ({ isLoggedIn, handleLogOut }) => {
                     )}
                 </NavMenu>
             </Nav>
-        </>
+        </div>
     );
 };
 

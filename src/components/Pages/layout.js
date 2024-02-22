@@ -1,5 +1,5 @@
 import React from 'react';
-import './pages.css'; // Import your CSS file for layout styles
+import './pages.css';
 
 
 function Layout({ children }) {

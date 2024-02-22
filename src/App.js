@@ -9,9 +9,11 @@ import Database from "./components/Pages/Database";
 import Kalenteri from "./components/Pages/kalenteri";
 import Pelisali from "./components/Pages/MooseOfDead/Pelisali";
 import Rekisteri from "./components/Pages/register"
-import './styles.css';
 import Navbar2 from "./components/Navbar/NavbarPreLogin";
 import Layout from "./components/Pages/layout";
+
+import '../src/components/Pages/pages.css'
+import videotausta from "./components/Pages/forestvideo.mp4";
 
 
 
@@ -36,43 +38,57 @@ function App({ LoggedInState }) {
 
     return (
 
-        <Router>
+<div>
+                <Router>
+                    <Navbar2 classname={"navbar"} isLoggedIn={isLoggedIn} handleLogOut={handleLogOut}/>
+                    <Routes>
 
-            <Navbar2 isLoggedIn={isLoggedIn} handleLogOut={handleLogOut}/>
-            <Routes>
+                        {/* Always render the login route */}
+                        <Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>
+                        <Route path="/register" element={<Rekisteri/>}/>
+                        {/* Conditional rendering of other routes based on isLoggedIn */}
+                        <Route path="*" element={isLoggedIn ? <AuthenticatedRoutes/> : <Navigate to="/login"/>}/>
 
-                {/* Always render the login route */}
-                <Route path="/login" element={<Login setLoggedIn={setLoggedIn}/>}/>
-                <Route path="/register" element={<Rekisteri/>}/>
-                {/* Conditional rendering of other routes based on isLoggedIn */}
-                <Route path="*" element={isLoggedIn ? <AuthenticatedRoutes/> : <Navigate to="/login"/>}/>
+                    </Routes>
 
+                </Router>
 
-            </Routes>
+</div>)
 
-        </Router>
-
-    );
 }
 
 function AuthenticatedRoutes() {
     return (
-        <>
-            <Navbar />
-            <Layout>
 
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route path="/database" element={<Database />} />
-                <Route path="/kalenteri" element={<Kalenteri />} />
-                <Route path="/pelisali" element={<Pelisali />} />
-                <Route path="/register" element={<Rekisteri />} />
+        <div>
 
-            </Routes>
-            </Layout>
-        </>
+
+            <div className={"contentFront"}>
+
+
+                <Navbar/>
+                <Layout>
+
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/about" element={<About/>}/>
+                        <Route path="/blogs" element={<Blogs/>}/>
+                        <Route path="/database" element={<Database/>}/>
+                        <Route path="/kalenteri" element={<Kalenteri/>}/>
+                        <Route path="/pelisali" element={<Pelisali/>}/>
+                        <Route path="/register" element={<Rekisteri/>}/>
+
+                    </Routes>
+                </Layout>
+
+
+            </div>
+
+            <div className={"contentBack"}>
+                <video src={videotausta} autoPlay loop muted/>
+
+            </div>
+        </div>
     );
 }
 

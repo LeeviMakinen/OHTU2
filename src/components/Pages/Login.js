@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "./pages.css"
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import videotausta from "./forestvideo.mp4"
 
 const Login = ({setLoggedIn}) => {
     const [username, setUsername] = useState("");
@@ -38,29 +39,35 @@ const Login = ({setLoggedIn}) => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <label>
-                    Username:
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </label>
-                <br />
-                <button type="submit">Login</button>
-            </form>
+        <div className={"container"}>
+            <div className={"contentBack"}>
+                <video src={videotausta} autoPlay loop muted/>
+            </div>
+
+            <div className={"contentFront"}>
+                <h2>Login</h2>
+                <form onSubmit={handleLogin}>
+                    <label>
+                        Username:
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </label>
+                    <br/>
+                    <label>
+                        Password:
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </label>
+                    <br/>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
         </div>
     );
 };
