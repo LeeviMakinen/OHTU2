@@ -13,7 +13,7 @@ const db =mysql.createConnection({
 
     host: "localhost",
     user: 'root',
-    password: 'A', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
+    password: 'Hur1ssalon5ale', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
     database: 'testi'
 
 });
