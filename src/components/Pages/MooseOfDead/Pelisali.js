@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import hirvipaa from "./Kuvat/hirvipaa.png";
 import Slot1 from "./Kuvat/Slot1.png"
 import Slot2 from "./Kuvat/Slot2.png"
 import Slot3 from "./Kuvat/Slot3.png"
@@ -40,37 +39,37 @@ const Toiminnallisuus = () => {
         const maximi = Math.floor(max);
         const randomluku = Math.floor(Math.random() * (maximi - minimi + 1) + minimi);
 
-        if (randomluku == 1) {
+        if (randomluku === 1) {
             return slot1;
         }
-        else if (randomluku == 2) {
+        else if (randomluku === 2) {
             return slot2;
         }
-        else if (randomluku == 3) {
+        else if (randomluku === 3) {
             return slot3;
         }
-        else if (randomluku == 4) {
+        else if (randomluku === 4) {
             return slot4;
         }
-        else if (randomluku == 5) {
+        else if (randomluku === 5) {
             return slot5;
         }
-        else if (randomluku == 6) {
+        else if (randomluku === 6) {
             return slot6;
         }
-        else if (randomluku == 7) {
+        else if (randomluku === 7) {
             return slot7;
         }
-        else if (randomluku == 8) {
+        else if (randomluku === 8) {
             return bigwin1;
         }
-        else if (randomluku == 9) {
+        else if (randomluku === 9) {
             return bigwin2;
         }
-        else if (randomluku == 10) {
+        else if (randomluku === 10) {
             return bigwin3;
         }
-        else if (randomluku == 11) {
+        else if (randomluku === 11) {
             return scatter;
         }
 
