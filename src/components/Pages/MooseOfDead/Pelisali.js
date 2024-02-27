@@ -15,24 +15,26 @@ import Scatter from "./Kuvat/SCATTER.png"
 
 const Toiminnallisuus = () => {
 
-    const [arvot1,setArvot1] = useState([0,0,0,0,0])
-    const [arvot2,setArvot2] = useState([0,0,0,0,0])
-    const [arvot3,setArvot3] = useState([0,0,0,0,0])
+    const slot1 = <img src={Slot1} alt={"slot1"} width={120} height={120}/>;
+    const slot2 = <img src={Slot2} alt={"slot2"} width={120} height={120}/>;
+    const slot3 = <img src={Slot3} alt={"slot3"} width={120} height={120}/>;
+    const slot4 = <img src={Slot4} alt={"slot4"} width={120} height={120}/>;
+    const slot5 = <img src={Slot5} alt={"slot5"} width={120} height={120}/>;
+    const slot6 = <img src={Slot6} alt={"slot6"} width={120} height={120}/>;
+    const slot7 = <img src={Slot7} alt={"slot7"} width={120} height={120}/>;
+    const bigwin1 = <img src={BigWin1} alt={"bigwin1"} width={120} height={120}/>;
+    const bigwin2 = <img src={BigWin2} alt={"bigwin2"} width={120} height={120}/>;
+    const bigwin3 = <img src={BigWin3} alt={"bigwin3"} width={120} height={120}/>;
+    const scatter = <img src={Scatter} alt={"bigwin3"} width={120} height={120}/>;
+
+    const [arvot1,setArvot1] = useState([slot1,slot1,slot1,slot1,slot1])
+    const [arvot2,setArvot2] = useState([slot1,slot1,slot1,slot1,slot1])
+    const [arvot3,setArvot3] = useState([slot1,slot1,slot1,slot1,slot1])
 
 
     function randomit(min,max) {
 
-        const slot1 = <img src={Slot1} alt={"slot1"} width={120} height={120}/>;
-        const slot2 = <img src={Slot2} alt={"slot2"} width={120} height={120}/>;
-        const slot3 = <img src={Slot3} alt={"slot3"} width={120} height={120}/>;
-        const slot4 = <img src={Slot4} alt={"slot4"} width={120} height={120}/>;
-        const slot5 = <img src={Slot5} alt={"slot5"} width={120} height={120}/>;
-        const slot6 = <img src={Slot6} alt={"slot6"} width={120} height={120}/>;
-        const slot7 = <img src={Slot7} alt={"slot7"} width={120} height={120}/>;
-        const bigwin1 = <img src={BigWin1} alt={"bigwin1"} width={120} height={120}/>;
-        const bigwin2 = <img src={BigWin2} alt={"bigwin2"} width={120} height={120}/>;
-        const bigwin3 = <img src={BigWin3} alt={"bigwin3"} width={120} height={120}/>;
-        const scatter = <img src={Scatter} alt={"bigwin3"} width={120} height={120}/>;
+
 
 
         const minimi = Math.ceil(min);
