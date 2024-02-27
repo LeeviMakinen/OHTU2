@@ -14,8 +14,6 @@ import Scatter from "./Kuvat/SCATTER.png"
 
 
 
-
-
 const Toiminnallisuus = () => {
 
     const [arvot1,setArvot1] = useState([0,0,0,0,0])
@@ -107,8 +105,8 @@ const About = () => {
         <div>
             <h1 className={"center"}>
                 Hunter Hank's Moose of Dead
-                <Toiminnallisuus/>
             </h1>
+            <Toiminnallisuus/>
         </div>
     );
 };
