@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import "../pages.css";
 import hirvipaa from "./Kuvat/hirvipaa.png";
 import Slot1 from "./Kuvat/Slot1.png"
 import Slot2 from "./Kuvat/Slot2.png"
@@ -11,42 +10,11 @@ import Slot7 from "./Kuvat/Slot7.png"
 import BigWin1 from "./Kuvat/BigWin1.png"
 import BigWin2 from "./Kuvat/BigWin2.png"
 import BigWin3 from "./Kuvat/BigWin3.png"
+import Scatter from "./Kuvat/SCATTER.png"
 
 
-const Ikonit = () => {
-    const slot1 = {
-        name:1,
-        slotImage: <img src={Slot1} alt={"slot1"} width={120} height={120}/>,
-    };
-    const slot2 = {
-        name:2,
-        slotImage: <img src={Slot2} alt={"slot1"} width={120} height={120}/>,
-    };
-    const slot3 = {
-        name:3,
-        slotImage: <img src={Slot3} alt={"slot1"} width={120} height={120}/>,
-    };
-    const slot4 = {
-        name:4,
-        slotImage: <img src={Slot4} alt={"slot1"} width={120} height={120}/>,
-    };
-    const slot5 = {
-        name:5,
-        slotImage: <img src={Slot5} alt={"slot1"} width={120} height={120}/>,
-    };
-    const slot6 = {
-        name:6,
-        slotImage: <img src={Slot6} alt={"slot1"} width={120} height={120}/>,
-    };
-    const slot7 = {
-        name:7,
-        slotImage: <img src={Slot7} alt={"slot1"} width={120} height={120}/>,
-    };
-    return (
-        null
 
-    );
-};
+
 
 const Toiminnallisuus = () => {
 
@@ -54,18 +22,70 @@ const Toiminnallisuus = () => {
     const [arvot2,setArvot2] = useState([0,0,0,0,0])
     const [arvot3,setArvot3] = useState([0,0,0,0,0])
 
-    function randomit(min,max){
+
+    function randomit(min,max) {
+
+        const slot1 = <img src={Slot1} alt={"slot1"} width={120} height={120}/>;
+        const slot2 = <img src={Slot2} alt={"slot2"} width={120} height={120}/>;
+        const slot3 = <img src={Slot3} alt={"slot3"} width={120} height={120}/>;
+        const slot4 = <img src={Slot4} alt={"slot4"} width={120} height={120}/>;
+        const slot5 = <img src={Slot5} alt={"slot5"} width={120} height={120}/>;
+        const slot6 = <img src={Slot6} alt={"slot6"} width={120} height={120}/>;
+        const slot7 = <img src={Slot7} alt={"slot7"} width={120} height={120}/>;
+        const bigwin1 = <img src={BigWin1} alt={"bigwin1"} width={120} height={120}/>;
+        const bigwin2 = <img src={BigWin2} alt={"bigwin2"} width={120} height={120}/>;
+        const bigwin3 = <img src={BigWin3} alt={"bigwin3"} width={120} height={120}/>;
+        const scatter = <img src={Scatter} alt={"bigwin3"} width={120} height={120}/>;
+
+
         const minimi = Math.ceil(min);
         const maximi = Math.floor(max);
-        return Math.floor(Math.random() * (maximi - minimi + 1) + minimi);
+        const randomluku = Math.floor(Math.random() * (maximi - minimi + 1) + minimi);
+
+        if (randomluku == 1) {
+            return slot1;
+        }
+        else if (randomluku == 2) {
+            return slot2;
+        }
+        else if (randomluku == 3) {
+            return slot3;
+        }
+        else if (randomluku == 4) {
+            return slot4;
+        }
+        else if (randomluku == 5) {
+            return slot5;
+        }
+        else if (randomluku == 6) {
+            return slot6;
+        }
+        else if (randomluku == 7) {
+            return slot7;
+        }
+        else if (randomluku == 8) {
+            return bigwin1;
+        }
+        else if (randomluku == 9) {
+            return bigwin2;
+        }
+        else if (randomluku == 10) {
+            return bigwin3;
+        }
+        else if (randomluku == 11) {
+            return scatter;
+        }
+
+
     }
 
-    function spinni(){
-        setArvot1([randomit(1,7),randomit(1,7),randomit(1,7),randomit(1,7),randomit(1,7)])
-        setArvot2([randomit(1,7),randomit(1,7),randomit(1,7),randomit(1,7),randomit(1,7)])
-        setArvot3([randomit(1,7),randomit(1,7),randomit(1,7),randomit(1,7),randomit(1,7)])
 
+    function spinni() {
+        setArvot1([randomit(1, 11),randomit(1,11),randomit(1,10),randomit(1,11),randomit(1,11)])
+        setArvot2([randomit(1, 11),randomit(1,11),randomit(1,10),randomit(1,11),randomit(1,11)])
+        setArvot3([randomit(1, 11),randomit(1,10),randomit(1,11),randomit(1,11),randomit(1,11)])
     }
+
 
     return(
         <div>
@@ -83,8 +103,6 @@ const Toiminnallisuus = () => {
 
 
 const About = () => {
-
-
     return (
         <div>
             <h1 className={"center"}>
