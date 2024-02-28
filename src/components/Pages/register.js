@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import videotausta from "./forestvideo.mp4";
+import videotausta from "./forestvideo2.mp4";
 const Register = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -9,10 +9,7 @@ const Register = () => {
 
     let sqlStatement = 'INSERT INTO tunnukset (`user`, `pass`) VALUES ("'+formData.username+'","'+formData.password+'");';
 
-    const resetValues = (event)=>{
-        setFormData(''+'');
 
-    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;

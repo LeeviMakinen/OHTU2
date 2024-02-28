@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./pages.css"
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import videotausta from "./forestvideo.mp4"
+import videotausta from "./forestvideo2.mp4"
 
 const Login = ({setLoggedIn}) => {
     const [username, setUsername] = useState("");

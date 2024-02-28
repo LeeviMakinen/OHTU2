@@ -13,7 +13,7 @@ import Navbar2 from "./components/Navbar/NavbarPreLogin";
 import Layout from "./components/Pages/layout";
 
 import '../src/components/Pages/pages.css'
-import videotausta from "./components/Pages/forestvideo.mp4";
+import videotausta from "./components/Pages/forestvideo2.mp4";
 
 
 
