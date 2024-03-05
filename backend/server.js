@@ -39,14 +39,17 @@ CREATE TABLE IF NOT EXISTS `tunnukset` (
   `pass` text DEFAULT NULL
 );
 
-INSERT INTO `tunnukset` (`user`, `pass`) VALUES
-	('test dummy', 'demo');
-
 -- Lisää muutama rivi tauluun 'ukot'
 INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Matti', 30);
 INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Teppo', 35);
 INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Seppo', 40);
 
+-- Luo taulu 'date_ranges', jos sitä ei ole olemassa
+CREATE TABLE IF NOT EXISTS date_ranges (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    StartDate DATE,
+    EndDate DATE
+);
 
  */
 
