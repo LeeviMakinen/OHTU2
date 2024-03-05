@@ -34,9 +34,6 @@ const Toiminnallisuus = () => {
 
     function randomit(min,max) {
 
-
-
-
         const minimi = Math.ceil(min);
         const maximi = Math.floor(max);
         const randomluku = Math.floor(Math.random() * (maximi - minimi + 1) + minimi);
