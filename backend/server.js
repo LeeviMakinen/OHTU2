@@ -13,7 +13,7 @@ const db =mysql.createConnection({
 
     host: "localhost",
     user: 'root',
-    password: 'A', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
+    password: 'Hur1ssalon5ale', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
     database: 'testi'
 
 });
@@ -112,6 +112,29 @@ app.post('/login', (req, res) => {
             }
         }
     });
+});
+app.post('/save-dates', (req, res) => {
+    try {
+        const { startDate, endDate } = req.body;
+
+        // Convert startDate and endDate to JavaScript Date objects
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(endDate);
+
+        // Insert the start and end dates into the date_ranges table
+        const insertDatesSQL = 'INSERT INTO date_ranges (StartDate, EndDate) VALUES (?, ?)';
+        db.query(insertDatesSQL, [startDateObj, endDateObj], (error) => {
+            if (error) {
+                console.error('Error inserting dates into date_ranges:', error);
+                res.status(500).json({ success: false, message: 'Failed to save dates to the database' });
+            } else {
+                res.json({ success: true, message: 'Dates saved successfully' });
+            }
+        });
+    } catch (error) {
+        console.error('Error parsing dates:', error);
+        res.status(400).json({ success: false, message: 'Invalid date format in the request' });
+    }
 });
 
 

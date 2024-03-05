@@ -8,16 +8,38 @@ function MyCalendar() {
 
     const handleDateClick = (value) => {
         if (!startDate) {
-            // If start date is not set, set the clicked date as the start date
-            setStartDate(value);
-            setEndDate(null); // Reset end date
-        } else if (!endDate) {
-            // If end date is not set, set the clicked date as the end date
-            setEndDate(value);
-        } else {
-            // If both start and end dates are set, reset them and set the clicked date as the start date
             setStartDate(value);
             setEndDate(null);
+        } else if (!endDate) {
+            setEndDate(value);
+        } else {
+            setStartDate(value);
+            setEndDate(null);
+        }
+    };
+
+    const handleSaveToDatabase = async () => {
+        try {
+            // Assuming startDate and endDate are Date objects
+            const response = await fetch('http://localhost:8081/save-dates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    startDate: startDate.toISOString(),
+                    endDate: endDate.toISOString(),
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to save dates to the backend. Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -27,7 +49,6 @@ function MyCalendar() {
     };
 
     const tileClassName = ({ date }) => {
-        // Apply different styles to tiles based on whether they are the start date, end date, or within the range
         if (startDate && endDate) {
             if (date >= startDate && date <= endDate) {
                 return 'selected-range';
@@ -43,6 +64,9 @@ function MyCalendar() {
     return (
         <div>
             <h1>My Calendar</h1>
+            <div>
+                <button onClick={handleSaveToDatabase}>Save to Database</button>
+            </div>
             <div>
                 <button onClick={handleReset}>Reset</button>
             </div>
