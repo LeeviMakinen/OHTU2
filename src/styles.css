@@ -51,4 +51,46 @@ video{
     height: 100%;
     object-fit: cover;
 }
+.calendar-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.selected-dates-container {
+    margin-bottom: 20px;
+}
+
+.selected-dates-container p {
+    margin: 5px 0;
+}
+
+.trips-container {
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
+.trips-container h2 {
+    margin-bottom: 10px;
+}
+
+.trip-name {
+    font-weight: bold;
+}
+
+.trip-dates {
+    margin-left: 10px;
+}
 

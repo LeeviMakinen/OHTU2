@@ -1,27 +1,21 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mysql = require('mysql');
+const cors = require('cors');
 
-const mysql = require('mysql')
-const cors = require('cors')
+const app = express();
 
-const app = express()
-
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 
-const db =mysql.createConnection({
-
+const db = mysql.createConnection({
     host: "localhost",
     user: 'root',
-    password: 'Hur1ssalon5ale', // Muokkaa oma salasanasi tähän kun demoat itsellesi oki?
+    password: 'A', // Modify your password here
     database: 'testi'
-
 });
 
-/*
-
-TIET0KANTASKRIPTI DEMOAMISTA VARTEN
--- Luo tietokanta, jos sitä ei ole olemassa
+/*-- Luo tietokanta, jos sitä ei ole olemassa
 CREATE DATABASE IF NOT EXISTS testi;
 
 -- Käytä luotua tietokantaa
@@ -34,9 +28,11 @@ CREATE TABLE IF NOT EXISTS ukot (
     Osumia_kaveriin INT
 );
 
-CREATE TABLE IF NOT EXISTS `tunnukset` (
-  `user` text DEFAULT NULL,
-  `pass` text DEFAULT NULL
+-- Luo taulu 'tunnukset', jos sitä ei ole olemassa
+CREATE TABLE IF NOT EXISTS tunnukset (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    user VARCHAR(255),
+    pass VARCHAR(255)
 );
 
 -- Lisää muutama rivi tauluun 'ukot'
@@ -48,60 +44,47 @@ INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Seppo', 40);
 CREATE TABLE IF NOT EXISTS date_ranges (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     StartDate DATE,
-    EndDate DATE
+    EndDate DATE,
+    TripName VARCHAR(255)
 );
-
- */
-
-db.connect(function(err){
-    if(err) console.log("Tilanne seis");
+*/
+db.connect(function (err) {
+    if (err) console.log("Database connection failed");
     console.log("Database connected");
+});
 
-})
+app.get('/', (req, res) => {
+    return res.json('Welcome to the backend');
+});
 
-app.get('/',(re,res)=>{
-
-    return res.json('Bäkkärin autokaista päivää')
-} )
-
-app.get('/ukot', (req,res)=>{
+app.get('/ukot', (req, res) => {
     const sql = "SELECT * FROM ukot";
-    db.query(sql,(err,data)=>{
-        if(err) return res.json(err);
+    db.query(sql, (err, data) => {
+        if (err) return res.json(err);
         return res.json(data);
-    })
-})
+    });
+});
 
-app.post('/lisaarivi', (req,res) => {
-    const {sqlStatement} = req.body;
-
-
-    db.query(sqlStatement, (err,result) =>{
-        if(err) {return res.status(500).json({error:err.message});}
-
+app.post('/lisaarivi', (req, res) => {
+    const { sqlStatement } = req.body;
+    db.query(sqlStatement, (err, result) => {
+        if (err) { return res.status(500).json({ error: err.message }); }
         console.log(result);
         res.json(result);
-    })
+    });
+});
 
-})
-
-app.post('/register', (req,res) => {
-    const {sqlStatement} = req.body;
-
-
-    db.query(sqlStatement, (err,result) =>{
-        if(err) {return res.status(500).json({error:err.message});}
-
+app.post('/register', (req, res) => {
+    const { sqlStatement } = req.body;
+    db.query(sqlStatement, (err, result) => {
+        if (err) { return res.status(500).json({ error: err.message }); }
         console.log(result);
         res.json(result);
-    })
-
-})
+    });
+});
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-
-    // Query the database for user credentials
     const sql = 'SELECT * FROM tunnukset WHERE user = ? AND pass = ?';
     db.query(sql, [username, password], (err, result) => {
         if (err) {
@@ -116,17 +99,15 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
 app.post('/save-dates', (req, res) => {
     try {
-        const { startDate, endDate } = req.body;
-
-        // Convert startDate and endDate to JavaScript Date objects
+        const { startDate, endDate, tripName } = req.body;
         const startDateObj = new Date(startDate);
         const endDateObj = new Date(endDate);
 
-        // Insert the start and end dates into the date_ranges table
-        const insertDatesSQL = 'INSERT INTO date_ranges (StartDate, EndDate) VALUES (?, ?)';
-        db.query(insertDatesSQL, [startDateObj, endDateObj], (error) => {
+        const insertDatesSQL = 'INSERT INTO date_ranges (StartDate, EndDate, TripName) VALUES (?, ?, ?)';
+        db.query(insertDatesSQL, [startDateObj, endDateObj, tripName], (error) => {
             if (error) {
                 console.error('Error inserting dates into date_ranges:', error);
                 res.status(500).json({ success: false, message: 'Failed to save dates to the database' });
@@ -141,7 +122,7 @@ app.post('/save-dates', (req, res) => {
 });
 
 app.get('/date_ranges', (req, res) => {
-    const sql = 'SELECT StartDate, EndDate FROM date_ranges';
+    const sql = 'SELECT StartDate, EndDate, TripName FROM date_ranges';
     db.query(sql, (err, data) => {
         if (err) {
             console.error('Error fetching dates from date_ranges:', err);
@@ -152,7 +133,25 @@ app.get('/date_ranges', (req, res) => {
     });
 });
 
+app.delete('/delete-trip/:tripName', (req, res) => {
+    const tripName = req.params.tripName;
 
-app.listen(8081, ()=>{
-    console.log("Listening")
-})
+    const deleteTripSQL = 'DELETE FROM date_ranges WHERE TripName = ?';
+    db.query(deleteTripSQL, [tripName], (error, result) => {
+        if (error) {
+            console.error('Error deleting trip from date_ranges:', error);
+            res.status(500).json({ success: false, message: 'Failed to delete trip from the database' });
+        } else {
+            if (result.affectedRows > 0) {
+                res.json({ success: true, message: 'Trip deleted successfully' });
+            } else {
+                res.status(404).json({ success: false, message: 'Trip not found' });
+            }
+        }
+    });
+});
+
+
+app.listen(8081, () => {
+    console.log("Listening on port 8081");
+});
