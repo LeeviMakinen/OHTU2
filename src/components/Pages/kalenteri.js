@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 function MyCalendar() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [fetchedDates, setFetchedDates] = useState([]);
 
     const handleDateClick = (value) => {
         if (!startDate) {
@@ -17,6 +18,13 @@ function MyCalendar() {
             setEndDate(null);
         }
     };
+
+    useEffect(() => {
+        fetch('http://localhost:8081/date_ranges')
+            .then(res => res.json())
+            .then(data => setFetchedDates(data))
+            .catch(err => console.log(err));
+    }, []);
 
     const handleSaveToDatabase = async () => {
         try {
@@ -79,6 +87,16 @@ function MyCalendar() {
                 onClickDay={handleDateClick}
                 tileClassName={tileClassName}
             />
+            <div>
+                <h2>Reissut:</h2>
+                <p>
+                    {fetchedDates.map(dateObj => {
+                        const startDate = new Date(dateObj.StartDate).toLocaleDateString();
+                        const endDate = new Date(dateObj.EndDate).toLocaleDateString();
+                        return `${startDate} - ${endDate}`;
+                    }).join(', ')}
+                </p>
+            </div>
         </div>
     );
 }

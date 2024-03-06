@@ -15,6 +15,9 @@ function Database() {
     const [nimi,setNimi] = useState('');
     const [osumat,setOsumat] = useState('');
 
+
+    const [fetchedDates, setFetchedDates] = useState([]);
+
     const errorPasta = "Että mua naurattaa et vielä nykyään on porukkaa mitkä ei kestä hyppysissään modattua androidia laitettiin kaverin kans custom romit flashaamaan ja kysyttiin et kai kaikille on ok et asennetaan twrp kaikille ja kaikillehan kävi. Asennettiin sit [DEVB][TWRP][PhilZ Touch] XZDualRecovery 2.8.26 RELEASE flashboot modessa kaikille ja pistettiin xda-linkit siitä kolme per mies  Siinä sit ku oltii eka puhelin flashatty twrp:llä ni kaikki muut alko valittaan bootloopista kaikki paitsi mä ja se mun kaveri. Oltiin vaan et mitä vittua, tässähän vasta eka pikku ongelma tullut vastaan ja kohta varmaan tulee lisää kun wipetään dalvin cachet ja pisteään open gappsit tulille! Mä sit sanoin mamman omille mussukoille että menkään ostamaan sitte nse vitun iphone-omena-luuri ku ite adbv-flashasin kernelin uusiksi ja vetelin dalvinia tyhjäksi sekä vaverin kans loput customit kerralla luuriin.    Olin vielä varannut koko porukalle illaks appsien asentelua varten Android-pipot mut eihän noille mammareille kehdannu niitä ees antaa. Joillekin ilmeisesti se yksi bugi on iltaa varten ihan tarpeeks."
 
     const handleIDChange = (event) =>{
@@ -57,7 +60,12 @@ function Database() {
             .then(res => res.json())
             .then(data => setData(data))
             .catch(err => console.log(err));
-    });
+
+        fetch('http://localhost:8081/date_ranges')
+            .then(res => res.json())
+            .then(data => setFetchedDates(data))
+            .catch(err => console.log(err));
+    }, []);
 
     const handleDeletion= (event)=>{
         const poistoLause = "DELETE FROM ukot WHERE  `ID`="+id+";";
@@ -68,6 +76,7 @@ function Database() {
         console.log(errorPasta);
 
     }
+
 
 
     const handleSqlSend = async () => {

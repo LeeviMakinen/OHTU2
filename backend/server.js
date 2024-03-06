@@ -140,6 +140,18 @@ app.post('/save-dates', (req, res) => {
     }
 });
 
+app.get('/date_ranges', (req, res) => {
+    const sql = 'SELECT StartDate, EndDate FROM date_ranges';
+    db.query(sql, (err, data) => {
+        if (err) {
+            console.error('Error fetching dates from date_ranges:', err);
+            res.status(500).json({ success: false, message: 'Internal server error' });
+        } else {
+            res.json(data);
+        }
+    });
+});
+
 
 app.listen(8081, ()=>{
     console.log("Listening")
