@@ -23,9 +23,6 @@ const Navbar = () => {
                     <NavLink to="/blogs" activeStyle>
                         Muistoja
                     </NavLink>
-                    <NavLink to="/database" activeStyle>
-                        Tietokanta
-                    </NavLink>
                     <NavLink to={"/kalenteri"} activeStyle>
                         Kalenteri
                     </NavLink>
@@ -42,9 +39,6 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink to="/blogs" activeStyle>
                     Muistoja
-                </NavLink>
-                <NavLink to="/database" activeStyle>
-                    Tietokanta
                 </NavLink>
                 <NavLink to={"/kalenteri"} activeStyle>
                     Kalenteri

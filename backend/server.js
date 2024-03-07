@@ -50,18 +50,36 @@ CREATE TABLE IF NOT EXISTS date_ranges (
 */
 db.connect(function (err) {
     if (err) console.log("Database connection failed");
-    console.log("Database connected");
+    else console.log("Database connected");
 });
 
+
+
 app.get('/', (req, res) => {
-    return res.json('Welcome to the backend');
+    return res.json({
+        message: 'Tervetuloa bäkkärin autokaistalle',
+        links: [
+            { rel: 'self', href: '/' },
+            { rel: 'ukot', href: '/ukot' },
+            { rel: 'register', href: '/register' },
+            { rel: 'login', href: '/login' },
+            { rel: 'date_ranges', href: '/date_ranges' }
+        ]
+    });
 });
 
 app.get('/ukot', (req, res) => {
     const sql = "SELECT * FROM ukot";
     db.query(sql, (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
+        if (err) return res.status(500).json({ error: err.message });
+        const responseData = {
+            data: data,
+            links: [
+                { rel: 'self', href: '/ukot' },
+                { rel: 'create', href: '/lisaarivi', method: 'POST' }
+            ]
+        };
+        return res.json(responseData);
     });
 });
 

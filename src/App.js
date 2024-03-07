@@ -5,7 +5,6 @@ import Login from "./components/Pages/Login";
 import Home from "./components/Pages";
 import About from "./components/Pages/about";
 import Blogs from "./components/Pages/blogs";
-import Database from "./components/Pages/Database";
 import Kalenteri from "./components/Pages/kalenteri";
 import Pelisali from "./components/Pages/MooseOfDead/Pelisali";
 import Rekisteri from "./components/Pages/register"
@@ -73,7 +72,6 @@ function AuthenticatedRoutes() {
                         <Route path="/" element={<Home/>}/>
                         <Route path="/about" element={<About/>}/>
                         <Route path="/blogs" element={<Blogs/>}/>
-                        <Route path="/database" element={<Database/>}/>
                         <Route path="/kalenteri" element={<Kalenteri/>}/>
                         <Route path="/pelisali" element={<Pelisali/>}/>
                         <Route path="/register" element={<Rekisteri/>}/>
