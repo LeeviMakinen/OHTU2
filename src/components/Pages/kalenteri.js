@@ -65,11 +65,19 @@ function MyCalendar() {
 
     const handleDeleteTrip = async () => {
         try {
-            if (!tripName) {
-                throw new Error('Please enter the name of the trip you want to delete.');
+            let tripToDelete = tripName;
+            // Check if input is a number
+            if (!isNaN(tripToDelete)) {
+                const index = parseInt(tripToDelete) - 1;
+                // Check if index is valid
+                if (index >= 0 && index < fetchedTrips.length) {
+                    tripToDelete = fetchedTrips[index].TripName;
+                } else {
+                    throw new Error('Invalid trip index');
+                }
             }
 
-            const response = await fetch(`http://localhost:8081/delete-trip/${tripName}`, {
+            const response = await fetch(`http://localhost:8081/delete-trip/${tripToDelete}`, {
                 method: 'DELETE',
             });
 
@@ -108,32 +116,33 @@ function MyCalendar() {
 
     return (
         <div className="calendar-container">
-            <h1>My Calendar</h1>
+            <h1>Hirvimetsän tapahtumakalenteri</h1>
             <div className="button-container">
-                <button onClick={handleSaveToDatabase}>Save Trip</button>
-                <button onClick={handleDeleteTrip}>Delete Trip</button>
+                <button onClick={handleSaveToDatabase}>Tallenna</button>
+                <button onClick={handleDeleteTrip}>Poista</button>
                 <input
                     type="text"
-                    placeholder="Enter trip name"
+                    placeholder="Syötä matkan nimi tai Id"
                     value={tripName}
                     onChange={(e) => setTripName(e.target.value)}
                 />
-                <button onClick={handleReset}>Reset</button>
+                <button onClick={handleReset}>Tyhjennä</button>
             </div>
             <div className="selected-dates-container">
-                <h2>Selected Dates:</h2>
-                <p>Start Date: {startDate ? startDate.toDateString() : 'None'}</p>
-                <p>End Date: {endDate ? endDate.toDateString() : 'None'}</p>
+                <h2>Valihe päivät:</h2>
+                <p>Matkan alkupäivä: {startDate ? startDate.toDateString() : 'None'}</p>
+                <p>Ja millon tullaan takaisin?: {endDate ? endDate.toDateString() : 'None'}</p>
             </div>
             <Calendar
                 onClickDay={handleDateClick}
                 tileClassName={tileClassName}
             />
             <div className="trips-container">
-                <h2>Trips:</h2>
+                <h2>Sovitut päivät:</h2>
                 <ul>
                     {fetchedTrips.map((trip, index) => (
                         <li key={index}>
+                            <span className="trip-index">{index + 1}:</span>
                             <span className="trip-name">{trip.TripName}:</span>
                             <span className="trip-dates">{new Date(trip.StartDate).toLocaleDateString()} - {new Date(trip.EndDate).toLocaleDateString()}</span>
                         </li>
