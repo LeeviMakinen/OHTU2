@@ -47,7 +47,7 @@ const Toiminnallisuus = () => {
 
 
     //Pisteet
-    const [pisteet,setPisteet] = useState(9.5)
+    const [pisteet,setPisteet] = useState(-0.5)
 
     useEffect(() => {
         pisteenlasku(arvot1);
@@ -113,7 +113,7 @@ const Toiminnallisuus = () => {
             setPisteet(pisteet+100)
             pyssy.play()
         }
-        else if ((voittorivi[0] === voittorivi[1] === voittorivi[2]) === voittorivi[3]){
+        else if ((voittorivi[0] === voittorivi[1] === voittorivi[2] === voittorivi[3])){
             setPisteet(pisteet+10)
             pyssy.play()
         }
@@ -125,12 +125,6 @@ const Toiminnallisuus = () => {
                 setPisteet(pisteet+0.5)
             pyssy.play()
         }
-        else {
-            setPisteet(pisteet-0.5)
-        }
-
-
-
     }
 
     return(
