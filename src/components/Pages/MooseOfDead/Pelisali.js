@@ -37,9 +37,14 @@ const Toiminnallisuus = () => {
     const scatter = <img src={Scatter} alt={"bigwin3"} width={120} height={120} />;
 
     //Arrayt slottiriveille
-    const [arvot1,setArvot1] = useState([slot1,slot1,slot1,slot1,slot1])
-    const [arvot2,setArvot2] = useState([slot1,slot1,slot1,slot1,slot1])
-    const [arvot3,setArvot3] = useState([slot1,slot1,slot1,slot1,slot1])
+    const [arvot1,setArvot1] = useState([0,0,0,0,0])
+    const [arvot2,setArvot2] = useState([0,0,0,0,0])
+    const [arvot3,setArvot3] = useState([0,0,0,0,0])
+
+    const [kuvat1, setKuvat1] = useState([slot1,slot1,slot1,slot1,slot1])
+    const [kuvat2, setKuvat2] = useState([slot1,slot1,slot1,slot1,slot1])
+    const [kuvat3, setKuvat3] = useState([slot1,slot1,slot1,slot1,slot1])
+
 
     //Pisteet
     const [pisteet,setPisteet] = useState(0.0)
@@ -103,6 +108,38 @@ const Toiminnallisuus = () => {
         setArvot2(newArvot2)
         setArvot3(newArvot3)
         console.log(newArvot1)
+        setKuvat1(kuvatjee(newArvot1))
+        console.log("kuvat ",kuvatjee(newArvot1))
+        setKuvat2(kuvatjee(newArvot2))
+        setKuvat3(kuvatjee(newArvot3))
+    }
+
+    function kuvatjee(numeroust) {
+        return numeroust.map(alkioust => {
+            if (alkioust === 1) {
+                return slot1;
+            } else if (alkioust === 2) {
+                return slot2;
+            } else if (alkioust === 3) {
+                return slot3;
+            } else if (alkioust === 4) {
+                return slot4;
+            } else if (alkioust === 5) {
+                return slot5;
+            } else if (alkioust === 6) {
+                return slot6;
+            } else if (alkioust === 7) {
+                return slot7;
+            } else if (alkioust === 8) {
+                return bigwin1;
+            } else if (alkioust === 9) {
+                return bigwin2;
+            } else if (alkioust === 10) {
+                return bigwin3;
+            } else if (alkioust === 11) {
+                return scatter;
+            }
+        });
     }
 
 
@@ -115,9 +152,9 @@ const Toiminnallisuus = () => {
     return(
         <div>
             <ul>
-                <li>{arvot1}</li>
-                <li>{arvot2}</li>
-                <li>{arvot3}</li>
+                <li>{kuvat1}</li>
+                <li>{kuvat2}</li>
+                <li>{kuvat3}</li>
             </ul>
 
             <button onClick={spinni}> SPIN AND WIN</button>
