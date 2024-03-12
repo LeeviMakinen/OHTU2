@@ -47,11 +47,13 @@ const Toiminnallisuus = () => {
 
 
     //Pisteet
-    const [pisteet,setPisteet] = useState(0.0)
+    const [pisteet,setPisteet] = useState(9.5)
 
     useEffect(() => {
         pisteenlasku(arvot1);
-    }, [arvot1]);
+        pisteenlasku(arvot2);
+        pisteenlasku(arvot3);
+    }, [arvot1],[arvot2],[arvot3]);
 
     function randomit(min,max) {
 
@@ -60,42 +62,6 @@ const Toiminnallisuus = () => {
         const randomluku = Math.floor(Math.random() * (maximi - minimi + 1) + minimi);
 
         return randomluku;
-        /*
-        if (randomluku === 1) {
-            return slot1;
-        }
-        else if (randomluku === 2) {
-            return slot2;
-        }
-        else if (randomluku === 3) {
-            return slot3;
-        }
-        else if (randomluku === 4) {
-            return slot4;
-        }
-        else if (randomluku === 5) {
-            return slot5;
-        }
-        else if (randomluku === 6) {
-            return slot6;
-        }
-        else if (randomluku === 7) {
-            return slot7;
-        }
-        else if (randomluku === 8) {
-            return bigwin1;
-        }
-        else if (randomluku === 9) {
-            return bigwin2;
-        }
-        else if (randomluku === 10) {
-            return bigwin3;
-        }
-        else if (randomluku === 11) {
-            return scatter;
-        }
-*/
-
     }
 
 
@@ -107,9 +73,7 @@ const Toiminnallisuus = () => {
         setArvot1(newArvot1)
         setArvot2(newArvot2)
         setArvot3(newArvot3)
-        console.log(newArvot1)
         setKuvat1(kuvatjee(newArvot1))
-        console.log("kuvat ",kuvatjee(newArvot1))
         setKuvat2(kuvatjee(newArvot2))
         setKuvat3(kuvatjee(newArvot3))
     }
@@ -144,9 +108,29 @@ const Toiminnallisuus = () => {
 
 
     function pisteenlasku(voittorivi){
-        if (voittorivi[0] === 1){
-            setPisteet(pisteet+1)
+
+        if ((voittorivi[0] === voittorivi[1] === voittorivi[2] === voittorivi[3] === voittorivi[4])){
+            setPisteet(pisteet+100)
+            pyssy.play()
         }
+        else if ((voittorivi[0] === voittorivi[1] === voittorivi[2]) === voittorivi[3]){
+            setPisteet(pisteet+10)
+            pyssy.play()
+        }
+        else if ((voittorivi[0] === voittorivi[1] === voittorivi[2])){
+            setPisteet(pisteet+5)
+            pyssy.play()
+        }
+        else if (voittorivi[0] === voittorivi[1]){
+                setPisteet(pisteet+0.5)
+            pyssy.play()
+        }
+        else {
+            setPisteet(pisteet-0.5)
+        }
+
+
+
     }
 
     return(
