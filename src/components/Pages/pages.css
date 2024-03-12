@@ -1,17 +1,31 @@
 /* styles.css */
 
+.container iframe {
+    height: 100px;
+    max-width: 100%;
+    max-height: 100%;
+
+}
+.post {
+    background-color: #7f7b7f;
+    margin-bottom: 3rem;
+    padding: 0.5rem;
+    border: 3px solid #25501d;
+    border-radius: 5px;
+    background-size: cover;
+}
+
 .container {
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
     color: #ffffff;
     margin: auto;
-    width: 50%;
+    width: 100%;
 
     padding: 10px;
-    display: flex;
+
     flex-direction: column; /* Arrange items vertically */
     justify-content: center; /* Center items vertically */
     align-items: center; /* Center items horizontally */
-    min-height: 50px;
 }
 
 body {
@@ -19,7 +33,7 @@ body {
 
 
     margin: auto;
-    min-height: 100vh;
+    min-height: 1000px;
     display: flex;
     justify-content: center;
     align-items: normal;
