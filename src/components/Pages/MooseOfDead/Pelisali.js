@@ -13,6 +13,7 @@ import Scatter from "./Kuvat/SCATTER.png"
 import Theme from "./Äänet/theme.wav"
 import Lataus from "./Äänet/Lataus.mp3"
 import Pyssy from "./Äänet/Pyssy.mp3"
+import EiRahaa from "./Äänet/EiRahaa.mp3"
 
 
 
@@ -22,7 +23,8 @@ const Toiminnallisuus = () => {
     const lataus= new Audio(Lataus)
     const theme = new Audio(Theme)
     const pyssy = new Audio(Pyssy)
-
+    const hirvi = new Audio(EiRahaa)
+    pyssy.volume = 0.3;
     //Slotit
     const slot1 = <img src={Slot1} alt={"slot1"} width={120} height={120} />;
     const slot2 = <img src={Slot2} alt={"slot2"} width={120} height={120} />;
@@ -37,17 +39,17 @@ const Toiminnallisuus = () => {
     const scatter = <img src={Scatter} alt={"bigwin3"} width={120} height={120} />;
 
     //Arrayt slottiriveille
-    const [arvot1,setArvot1] = useState([0,0,0,0,0])
-    const [arvot2,setArvot2] = useState([0,0,0,0,0])
-    const [arvot3,setArvot3] = useState([0,0,0,0,0])
+    const [arvot1,setArvot1] = useState([3,1,7,2,0])
+    const [arvot2,setArvot2] = useState([0,3,8,2,2])
+    const [arvot3,setArvot3] = useState([6,5,4,2,1])
 
-    const [kuvat1, setKuvat1] = useState([slot1,slot1,slot1,slot1,slot1])
-    const [kuvat2, setKuvat2] = useState([slot1,slot1,slot1,slot1,slot1])
-    const [kuvat3, setKuvat3] = useState([slot1,slot1,slot1,slot1,slot1])
+    const [kuvat1, setKuvat1] = useState([slot4,slot2,bigwin1,slot3,slot1])
+    const [kuvat2, setKuvat2] = useState([slot1,slot4,bigwin2,slot3,slot3])
+    const [kuvat3, setKuvat3] = useState([slot7,slot6,slot5,slot3,slot2])
 
 
     //Pisteet
-    const [pisteet,setPisteet] = useState(-0.5)
+    const [pisteet,setPisteet] = useState(10.5)
 
     useEffect(() => {
         pisteenlasku(arvot1);
@@ -66,16 +68,21 @@ const Toiminnallisuus = () => {
 
 
     function spinni() {
-        lataus.play()
-        const newArvot1=([randomit(1, 11),randomit(1,11),randomit(1,10),randomit(1,11),randomit(1,11)])
-        const newArvot2=([randomit(1, 11),randomit(1,11),randomit(1,10),randomit(1,11),randomit(1,11)])
-        const newArvot3 =([randomit(1, 11),randomit(1,10),randomit(1,11),randomit(1,11),randomit(1,11)])
-        setArvot1(newArvot1)
-        setArvot2(newArvot2)
-        setArvot3(newArvot3)
-        setKuvat1(kuvatjee(newArvot1))
-        setKuvat2(kuvatjee(newArvot2))
-        setKuvat3(kuvatjee(newArvot3))
+        if (pisteet <= 0){
+            hirvi.play()
+        }
+        else {
+            lataus.play()
+            const newArvot1=([randomit(1, 11),randomit(1,11),randomit(1,10),randomit(1,11),randomit(1,11)])
+            const newArvot2=([randomit(1, 11),randomit(1,11),randomit(1,10),randomit(1,11),randomit(1,11)])
+            const newArvot3 =([randomit(1, 11),randomit(1,10),randomit(1,11),randomit(1,11),randomit(1,11)])
+            setArvot1(newArvot1)
+            setArvot2(newArvot2)
+            setArvot3(newArvot3)
+            setKuvat1(kuvatjee(newArvot1))
+            setKuvat2(kuvatjee(newArvot2))
+            setKuvat3(kuvatjee(newArvot3))
+        }
     }
 
     function kuvatjee(numeroust) {
@@ -108,21 +115,29 @@ const Toiminnallisuus = () => {
 
 
     function pisteenlasku(voittorivi){
-
-        if ((voittorivi[0] === voittorivi[1] === voittorivi[2] === voittorivi[3] === voittorivi[4])){
+        setPisteet(pisteet-0.5)
+        if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2] && voittorivi[2] === voittorivi[3] && voittorivi[3] === voittorivi[4])){
             setPisteet(pisteet+100)
+            console.log("5 voitto")
+            console.log("+100 euroo")
             pyssy.play()
         }
-        else if ((voittorivi[0] === voittorivi[1] === voittorivi[2] === voittorivi[3])){
+        else if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2] && voittorivi[2] === voittorivi[3])){
             setPisteet(pisteet+10)
+            console.log("4 voitto")
+            console.log("+10 euroo")
             pyssy.play()
         }
-        else if ((voittorivi[0] === voittorivi[1] === voittorivi[2])){
+        else if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2])){
             setPisteet(pisteet+5)
+            console.log("3 voitto")
+            console.log("+5 euroo")
             pyssy.play()
         }
         else if (voittorivi[0] === voittorivi[1]){
                 setPisteet(pisteet+0.5)
+            console.log("2 voitto")
+            console.log("omat takas")
             pyssy.play()
         }
     }
@@ -146,10 +161,16 @@ const Toiminnallisuus = () => {
 const About = () => {
     return (
         <div>
-            <h1 className={"center"}>
-                Hunter Hank's Moose of Dead
-            </h1>
-            <Toiminnallisuus/>
+            <div className="container">
+                <div className="post">
+                    <h1 className={"center"}>
+                        Hunter Hank's Moose of Dead
+                    </h1>
+                    <Toiminnallisuus/>
+                </div>
+
+            </div>
+
         </div>
     );
 };

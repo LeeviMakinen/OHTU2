@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
+import "./kalenteri.css";
 import 'react-calendar/dist/Calendar.css';
 
 function MyCalendar() {
@@ -115,42 +116,46 @@ function MyCalendar() {
     };
 
     return (
-        <div className="calendar-container">
-            <h1>Hirvimetsän tapahtumakalenteri</h1>
-            <div className="button-container">
-                <button onClick={handleSaveToDatabase}>Tallenna</button>
-                <button onClick={handleDeleteTrip}>Poista</button>
-                <input
-                    type="text"
-                    placeholder="Syötä matkan nimi tai Id"
-                    value={tripName}
-                    onChange={(e) => setTripName(e.target.value)}
+        <div className="post">
+            <div className="container">
+                <h1>Hirvimetsän tapahtumakalenteri</h1>
+                <div className="button-container">
+                    <button onClick={handleSaveToDatabase}>Tallenna</button>
+                    <button onClick={handleDeleteTrip}>Poista</button>
+                    <input
+                        type="text"
+                        placeholder="Syötä matkan nimi tai Id"
+                        value={tripName}
+                        onChange={(e) => setTripName(e.target.value)}
+                    />
+                    <button onClick={handleReset}>Tyhjennä</button>
+                </div>
+                <div className="selected-dates-container">
+                    <h2>Valihe päivät:</h2>
+                    <p>Matkan alkupäivä: {startDate ? startDate.toDateString() : 'None'}</p>
+                    <p>Ja millon tullaan takaisin?: {endDate ? endDate.toDateString() : 'None'}</p>
+                </div>
+                <Calendar
+                    onClickDay={handleDateClick}
+                    tileClassName={tileClassName}
                 />
-                <button onClick={handleReset}>Tyhjennä</button>
-            </div>
-            <div className="selected-dates-container">
-                <h2>Valihe päivät:</h2>
-                <p>Matkan alkupäivä: {startDate ? startDate.toDateString() : 'None'}</p>
-                <p>Ja millon tullaan takaisin?: {endDate ? endDate.toDateString() : 'None'}</p>
-            </div>
-            <Calendar
-                onClickDay={handleDateClick}
-                tileClassName={tileClassName}
-            />
-            <div className="trips-container">
-                <h2>Sovitut päivät:</h2>
-                <ul>
-                    {fetchedTrips.map((trip, index) => (
-                        <li key={index}>
-                            <span className="trip-index">{index + 1}:</span>
-                            <span className="trip-name">{trip.TripName}:</span>
-                            <span className="trip-dates">{new Date(trip.StartDate).toLocaleDateString()} - {new Date(trip.EndDate).toLocaleDateString()}</span>
-                        </li>
-                    ))}
-                </ul>
+                <div className="trips-container">
+                    <h2>Sovitut päivät:</h2>
+                    <ul>
+                        {fetchedTrips.map((trip, index) => (
+                            <li key={index}>
+                                <span className="trip-index">{index + 1}:</span>
+                                <span className="trip-name">{trip.TripName}:</span>
+                                <span
+                                    className="trip-dates">{new Date(trip.StartDate).toLocaleDateString()} - {new Date(trip.EndDate).toLocaleDateString()}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
+
     );
-} //aaa
+}
 
 export default MyCalendar;
