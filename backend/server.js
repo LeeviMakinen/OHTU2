@@ -2,16 +2,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
+const multer = require('multer');
+const path = require('path');
+
+
+const PORT = 8081;
 
 const app = express();
+
 
 app.use(cors());
 app.use(express.json());
 
+
+app.use('/backend/uploads', express.static(path.join(__dirname, 'uploads')));
+
 const db = mysql.createConnection({
     host: "localhost",
     user: 'root',
-    password: 'salasana', // Salis :D:D:D:D:
+    password: 'A', // Salis :D:D:D:D:
     database: 'testi'
 });
 
@@ -57,6 +66,20 @@ INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Teppo', 35);
 INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Seppo', 40);
 */
 
+// Configure Multer for file backend/uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'backend/uploads/'); // Specify the destination directory for uploaded files
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname); // Use the original filename for uploaded files
+    }
+});
+const upload = multer({ storage: storage });
+
+
+
+
 
 // Ensure the connection to the database
 db.connect(function (err) {
@@ -65,20 +88,50 @@ db.connect(function (err) {
 });
 
 // Endpoint to save a new blog post
-app.post('/blog-posts', (req, res) => {
+
+
+
+app.post('/blog-posts', upload.single('image'), (req, res) => {
     const { content } = req.body;
-    const insertPostSQL = 'INSERT INTO blog_posts (content) VALUES (?)';
-    db.query(insertPostSQL, [content], (error) => {
-        if (error) {
-            console.error('Error inserting blog post:', error);
-            res.status(500).json({ success: false, message: 'Failed to save blog post to the database' });
+    const imageUrl = req.file.path; // Path to the uploaded image
+
+    const sql = 'INSERT INTO blog_posts (content, image) VALUES (?, ?)';
+    db.query(sql, [content, imageUrl], (err, result) => {
+        if (err) {
+            console.error('Error saving blog post:', err);
+            res.status(500).json({ success: false, message: 'Internal server error' });
         } else {
-            res.json({ success: true, message: 'Blog post saved successfully' });
+            res.status(201).json({ success: true, message: 'Blog post created successfully' });
         }
     });
 });
 
-// Endpoint to fetch earlier written blog posts
+
+// Postauksen päivityksen endpoint
+app.put('/blog-posts/:id', upload.single('image'), (req, res) => {
+    const { id } = req.body;
+    const { content } = req.body;
+    let imageUrl = null;
+    if(req.file){
+        imageUrl = req.file.path; // Path to the uploaded image
+    }
+
+
+
+
+
+    const updatePostSQL = 'UPDATE blog_posts SET content = ?,image = ? WHERE id = ?';
+    db.query(updatePostSQL, [content,imageUrl, id], (error) => {
+        if (error) {
+            console.error('Error updating blog post:', error);
+            res.status(500).json({ success: false, message: 'Failed to update blog post in the database' });
+        } else {
+            res.json({ success: true, message: 'Blog post updated successfully' });
+        }
+    });
+});
+
+// Hakee vanhat postaukset
 app.get('/blog-posts', (req, res) => {
     const sql = 'SELECT * FROM blog_posts ORDER BY created_at DESC';
     db.query(sql, (err, data) => {
@@ -105,20 +158,8 @@ app.delete('/blog-posts/:id', (req, res) => {
     });
 });
 
-// Endpoint to update a blog post
-app.put('/blog-posts/:id', (req, res) => {
-    const postId = req.params.id;
-    const { content } = req.body;
-    const updatePostSQL = 'UPDATE blog_posts SET content = ? WHERE id = ?';
-    db.query(updatePostSQL, [content, postId], (error) => {
-        if (error) {
-            console.error('Error updating blog post:', error);
-            res.status(500).json({ success: false, message: 'Failed to update blog post in the database' });
-        } else {
-            res.json({ success: true, message: 'Blog post updated successfully' });
-        }
-    });
-});
+
+
 app.get('/', (req, res) => {
     return res.json({
         message: 'Tervetuloa bäkkärin autokaistalle',

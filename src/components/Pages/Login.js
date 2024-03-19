@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import "./pages.css"
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import videotausta from "./forestvideo2.mp4"
+import videotausta from "./forestvideo2.mp4";
+
+const videoURL = 'https://dl.dropboxusercontent.com/scl/fi/b8b0g14nqd150lq7jhfsv/forestvideo2.mp4?rlkey=c9ytiz1wbk64244gb4gvmjl3x&dl=0';
 
 const Login = ({setLoggedIn}) => {
     const [username, setUsername] = useState("");
@@ -41,7 +43,7 @@ const Login = ({setLoggedIn}) => {
     return (
         <div className={"container"}>
             <div className={"contentBack"}>
-                <video src={videotausta} autoPlay loop muted/>
+                <video src={videoURL} autoPlay loop muted/>
             </div>
 
             <div className={"contentFront"}>
@@ -67,6 +69,7 @@ const Login = ({setLoggedIn}) => {
                     <br/>
                     <button type="submit">Login</button>
                 </form>
+
             </div>
         </div>
     );

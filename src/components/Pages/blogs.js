@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import './pages.css';
 
+
+
 const Blogs = () => {
     const [content, setContent] = useState('');
+    const [image, setImage] = useState(null); // Added state for image
     const [posts, setPosts] = useState([]);
     const [editId, setEditId] = useState('');
     const [editContent, setEditContent] = useState('');
+    const [editImage, setEditImage] = useState(null);
+    const [isAddingNewPost, setIsAddingNewPost] = useState(false);
 
     useEffect(() => {
         fetchPosts();
@@ -15,7 +20,14 @@ const Blogs = () => {
     const fetchPosts = async () => {
         try {
             const response = await axios.get('http://localhost:8081/blog-posts');
-            setPosts(response.data);
+            setPosts(response.data.map(post => ({
+                id:post.id,
+                content:post.content,
+                image: `http://localhost:8081/${post.image}`,
+                created_at: post.created_at
+
+            })))
+            console.log(response.data);
         } catch (error) {
             console.error('Error fetching blog posts:', error);
         }
@@ -25,10 +37,31 @@ const Blogs = () => {
         setContent(e.target.value);
     };
 
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]); // Hoida kuvan muutos
+    };
+    const handleEditImageChange = (e) => {
+        setEditImage(e.target.files[0]); // Hoida kuvan muutos
+    };
+
+
+
     const handleSavePost = async () => {
         try {
-            await axios.post('http://localhost:8081/blog-posts', { content });
+            const formData = new FormData();
+            formData.append('content', content);
+            formData.append('image', image);
+
+            const response = await axios.post('http://localhost:8081/blog-posts', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+
             setContent(''); // Clear the text field after saving
+            setImage(null); // Clear the image state after saving
+            setIsAddingNewPost(false);
             fetchPosts(); // Fetch updated posts after saving
         } catch (error) {
             console.error('Error saving blog post:', error);
@@ -38,6 +71,7 @@ const Blogs = () => {
     const handleDeletePost = async (postId) => {
         try {
             await axios.delete(`http://localhost:8081/blog-posts/${postId}`);
+            setImage(null);
             fetchPosts(); // Fetch updated posts after deleting
         } catch (error) {
             console.error('Error deleting blog post:', error);
@@ -46,54 +80,115 @@ const Blogs = () => {
 
     const handleEditPost = async () => {
         try {
-            await axios.put(`http://localhost:8081/blog-posts/${editId}`, { content: editContent });
+            const formData = new FormData();
+            formData.append('id',editId);
+            formData.append('content', editContent);
+            formData.append('image', editImage);
+
+            const response = await axios.put(`http://localhost:8081/blog-posts/${editId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            console.log(response.data); // Handle response as needed
             setEditId('');
             setEditContent('');
+            setEditImage(null);
             fetchPosts(); // Fetch updated posts after updating
         } catch (error) {
             console.error('Error updating blog post:', error);
         }
     };
 
+
+    const toggleAddNewPost = () => {
+        setIsAddingNewPost(!isAddingNewPost);
+
+    };
+
+
+
+
+
     return(
         <div className="container">
-            <h1>Tälle sivulle vissii metästystarinointia</h1>
-            <div className="blog-form">
+            <h1>Tälle sivulle vissiin metästystarinoita</h1>
+
+            <button className={"uploadtext"} onClick={toggleAddNewPost}>{isAddingNewPost ? "En mie nyt oikeesti" : "Lisää muistoja"}</button>
+            {isAddingNewPost && (
+
+                <div>
+
                 <textarea
-                    className="textarea"
+
                     value={content}
                     onChange={handleContentChange}
-                    placeholder="Write your blog post here..."
-                />
-                <button onClick={handleSavePost}>Save Post</button>
-            </div>
+                    placeholder="Kirjottelehan tähän tarinas..."
+               />
+                    <div className="blog-form">
+                    <label className={"uploadtext"} htmlFor="uploadbox">Lisää kuva</label>
+                    <input style={{visibility: "hidden"}} id="uploadbox" type="file" onChange={handleImageChange}/>
+                    <button className={"uploadtext"} onClick={handleSavePost}>Tallenna</button>
+                    </div>
+                </div>
+
+            )}
+
             <div className="blog-posts">
-                <h2>Earlier Written Posts</h2>
+                <h2>Aikaisemmat raapustukset</h2>
                 <ul>
                     {posts.map((post) => (
                         <li key={post.id} className="blog-post">
                             <div>ID: {post.id}</div>
-                            <div>Content: {post.content}</div>
+                            <div>{post.content}</div>
+
+                            {post.image ==="http://localhost:8081/null" ?
+                                (<p>Kuvaa ei saatavilla</p>):
+                                (<img className={"blogPostPhoto"} src={post.image} alt="reissukuva"/>)
+                            }
                             <div>Created At: {new Date(post.created_at).toLocaleString()}</div>
-                            <button onClick={() => handleDeletePost(post.id)}>Delete</button>
-                            <button onClick={() => { setEditId(post.id); setEditContent(post.content); }}>Edit</button>
+                            <button className={"uploadtext"} onClick={() => handleDeletePost(post.id)}>Poista</button>
+
+                            <button className={"uploadtext"} onClick={() => {
+                                setEditId(post.id);
+                                setEditContent(post.content);
+                                console.log(editContent);
+                                setEditImage(post.image);
+                            }}>Muokkaa
+                            </button>
+
+
                         </li>
                     ))}
                 </ul>
+
             </div>
+
             {editId && (
                 <div className="edit-form">
+
                     <input
                         type="text"
                         value={editContent}
                         onChange={(e) => setEditContent(e.target.value)}
-                        placeholder="Enter new content..."
+                        placeholder="Mitteepä kirjottelit väärin..."
                     />
-                    <button onClick={handleEditPost}>Save Changes</button>
+                    <label className={"uploadtext"} htmlFor="uploadbox2">Lisää kuva</label>
+                    <input
+                        style={{visibility: "hidden"}}
+                        id="uploadbox2"
+                        type="file"
+                        onChange={handleEditImageChange}
+                        placeholder={""}
+                    />
+
+                    <button onClick={handleEditPost}>Tallenna muutokset</button>
+
+
                 </div>
             )}
-        </div>
-    )
+        </div>)
 };
 
 export default Blogs;

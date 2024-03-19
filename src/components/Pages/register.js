@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import videotausta from "./forestvideo2.mp4";
+
+const videoURL = 'https://dl.dropboxusercontent.com/scl/fi/b8b0g14nqd150lq7jhfsv/forestvideo2.mp4?rlkey=c9ytiz1wbk64244gb4gvmjl3x&dl=0';
 const Register = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -51,7 +53,7 @@ const Register = () => {
     return (
         <div>
             <div className={"contentBack"}>
-                <video src={videotausta} autoPlay loop muted/>
+                <video src={videoURL} autoPlay loop muted/>
             </div>
 
 

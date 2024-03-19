@@ -14,7 +14,7 @@ import Layout from "./components/Pages/layout";
 import '../src/components/Pages/pages.css'
 import videotausta from "./components/Pages/forestvideo2.mp4";
 
-
+const videoURL = 'https://dl.dropboxusercontent.com/scl/fi/b8b0g14nqd150lq7jhfsv/forestvideo2.mp4?rlkey=c9ytiz1wbk64244gb4gvmjl3x&dl=0'
 
 function App({ LoggedInState }) {
     // State to track the login status
@@ -83,7 +83,7 @@ function AuthenticatedRoutes() {
             </div>
 
             <div className={"contentBack"}>
-                <video src={videotausta} autoPlay loop muted/>
+                <video src={videoURL} autoPlay loop muted/>
 
             </div>
         </div>
