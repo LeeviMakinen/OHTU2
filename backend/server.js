@@ -1,12 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+
 const mysql = require('mysql');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 
 
-const PORT = 8081;
+
 
 const app = express();
 
@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS date_ranges (
 CREATE TABLE IF NOT EXISTS blog_posts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     content TEXT,
+    image TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
