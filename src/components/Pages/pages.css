@@ -201,3 +201,14 @@ ul{
         justify-content: center; /* Adjust alignment for menu button */
     }
 }
+
+.post {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border: 3px solid #000000;
+    border-radius: 6px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("tausta.jpg");
+}

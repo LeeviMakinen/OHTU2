@@ -109,20 +109,28 @@ const Toiminnallisuus = () => {
 
     function pisteenlasku(voittorivi){
 
-        if ((voittorivi[0] === voittorivi[1] === voittorivi[2] === voittorivi[3] === voittorivi[4])){
+        if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2] && voittorivi[2] === voittorivi[3] && voittorivi[3] === voittorivi[4])){
             setPisteet(pisteet+100)
+            console.log("5 voitto")
+            console.log("+100 euroo")
             pyssy.play()
         }
-        else if ((voittorivi[0] === voittorivi[1] === voittorivi[2] === voittorivi[3])){
+        else if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2] && voittorivi[2] === voittorivi[3])){
             setPisteet(pisteet+10)
+            console.log("4 voitto")
+            console.log("+10 euroo")
             pyssy.play()
         }
-        else if ((voittorivi[0] === voittorivi[1] === voittorivi[2])){
+        else if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2])){
             setPisteet(pisteet+5)
+            console.log("3 voitto")
+            console.log("+5 euroo")
             pyssy.play()
         }
         else if (voittorivi[0] === voittorivi[1]){
                 setPisteet(pisteet+0.5)
+            console.log("2 voitto")
+            console.log("omat takas")
             pyssy.play()
         }
     }
@@ -146,10 +154,16 @@ const Toiminnallisuus = () => {
 const About = () => {
     return (
         <div>
-            <h1 className={"center"}>
-                Hunter Hank's Moose of Dead
-            </h1>
-            <Toiminnallisuus/>
+            <div className="container">
+                <div className="post">
+                    <h1 className={"center"}>
+                        Hunter Hank's Moose of Dead
+                    </h1>
+                    <Toiminnallisuus/>
+                </div>
+
+            </div>
+
         </div>
     );
 };
