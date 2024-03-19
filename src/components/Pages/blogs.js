@@ -63,20 +63,20 @@ const Blogs = () => {
                     className="textarea"
                     value={content}
                     onChange={handleContentChange}
-                    placeholder="Write your blog post here..."
+                    placeholder="Kirjoittele hyvä ihminen tähän...."
                 />
-                <button onClick={handleSavePost}>Save Post</button>
+                <button onClick={handleSavePost}>Tallenna</button>
             </div>
             <div className="blog-posts">
-                <h2>Earlier Written Posts</h2>
+                <h2>Tarinoita</h2>
                 <ul>
                     {posts.map((post) => (
                         <li key={post.id} className="blog-post">
                             <div>ID: {post.id}</div>
-                            <div>Content: {post.content}</div>
-                            <div>Created At: {new Date(post.created_at).toLocaleString()}</div>
-                            <button onClick={() => handleDeletePost(post.id)}>Delete</button>
-                            <button onClick={() => { setEditId(post.id); setEditContent(post.content); }}>Edit</button>
+                            <div>Sisältö: {post.content}</div>
+                            <div>Luonti päivämäärä: {new Date(post.created_at).toLocaleString()}</div>
+                            <button onClick={() => handleDeletePost(post.id)}>Poista</button>
+                            <button onClick={() => { setEditId(post.id); setEditContent(post.content); }}>Muokkaa</button>
                         </li>
                     ))}
                 </ul>
@@ -89,7 +89,7 @@ const Blogs = () => {
                         onChange={(e) => setEditContent(e.target.value)}
                         placeholder="Enter new content..."
                     />
-                    <button onClick={handleEditPost}>Save Changes</button>
+                    <button onClick={handleEditPost}>Tallenna muutokset</button>
                 </div>
             )}
         </div>

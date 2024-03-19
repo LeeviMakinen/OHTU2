@@ -22,7 +22,7 @@ const Toiminnallisuus = () => {
     const lataus= new Audio(Lataus)
     const theme = new Audio(Theme)
     const pyssy = new Audio(Pyssy)
-
+    pyssy.volume = 0.3;
     //Slotit
     const slot1 = <img src={Slot1} alt={"slot1"} width={120} height={120} />;
     const slot2 = <img src={Slot2} alt={"slot2"} width={120} height={120} />;
