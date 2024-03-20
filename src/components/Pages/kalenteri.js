@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import "./kalenteri.css";
 import 'react-calendar/dist/Calendar.css';
 
 function MyCalendar() {
