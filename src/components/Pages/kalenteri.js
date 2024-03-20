@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-
+import './pages.css';
 function MyCalendar() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -119,15 +119,16 @@ function MyCalendar() {
             <div className="container">
                 <h1>Hirvimetsän tapahtumakalenteri</h1>
                 <div className="button-container">
-                    <button onClick={handleSaveToDatabase}>Tallenna</button>
-                    <button onClick={handleDeleteTrip}>Poista</button>
+                    <button className={"uploadtext"} onClick={handleSaveToDatabase}>Tallenna</button>
+                    <button className={"uploadtext"} onClick={handleDeleteTrip}>Poista</button>
+
                     <input
                         type="text"
                         placeholder="Syötä matkan nimi tai Id"
                         value={tripName}
                         onChange={(e) => setTripName(e.target.value)}
                     />
-                    <button onClick={handleReset}>Tyhjennä</button>
+                    <button className={"uploadtext"} onClick={handleReset}>Tyhjennä</button>
                 </div>
                 <div className="selected-dates-container">
                     <h2>Valihe päivät:</h2>

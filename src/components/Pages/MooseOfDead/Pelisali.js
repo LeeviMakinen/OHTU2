@@ -173,7 +173,8 @@ const Toiminnallisuus = () => {
                 <li>{kuvat3}</li>
             </ul>
 
-            <button onClick={spinni}> SPIN AND WIN</button>
+
+            <button className={"uploadtext"} onClick={spinni}> SPIN AND WIN</button>
             Voitot: {pisteet} €
         </div>
 
