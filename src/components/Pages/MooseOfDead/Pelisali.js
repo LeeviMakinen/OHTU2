@@ -10,18 +10,39 @@ import BigWin1 from "./Kuvat/BigWin1.png"
 import BigWin2 from "./Kuvat/BigWin2.png"
 import BigWin3 from "./Kuvat/BigWin3.png"
 import Scatter from "./Kuvat/SCATTER.png"
-import Theme from "./Äänet/theme.wav"
 import Lataus from "./Äänet/Lataus.mp3"
 import Pyssy from "./Äänet/Pyssy.mp3"
 import EiRahaa from "./Äänet/EiRahaa.mp3"
+import Theme from "./Äänet/theme.wav"
 
 
 
+const Musat = () => {
+    const [audio] = useState(new Audio(Theme));
+
+    useEffect(() => {
+        audio.loop = true;
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {}).catch(error => {
+                // Auto-play was prevented
+                // You can handle this scenario here, like showing a play button
+                console.error('Audio playback prevented:', error);
+            });
+        }
+
+        return () => {
+            audio.pause();
+        };
+    }, [audio]);
+
+    return null;
+};
 const Toiminnallisuus = () => {
 
     //Äänet
     const lataus= new Audio(Lataus)
-    const theme = new Audio(Theme)
     const pyssy = new Audio(Pyssy)
     const hirvi = new Audio(EiRahaa)
     pyssy.volume = 0.3;
@@ -115,32 +136,34 @@ const Toiminnallisuus = () => {
 
 
     function pisteenlasku(voittorivi){
-        setPisteet(pisteet-0.5)
-        if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2] && voittorivi[2] === voittorivi[3] && voittorivi[3] === voittorivi[4])){
-            setPisteet(pisteet+100)
-            console.log("5 voitto")
-            console.log("+100 euroo")
-            pyssy.play()
-        }
-        else if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2] && voittorivi[2] === voittorivi[3])){
-            setPisteet(pisteet+10)
-            console.log("4 voitto")
-            console.log("+10 euroo")
-            pyssy.play()
-        }
-        else if ((voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2])){
-            setPisteet(pisteet+5)
-            console.log("3 voitto")
-            console.log("+5 euroo")
-            pyssy.play()
-        }
-        else if (voittorivi[0] === voittorivi[1]){
-                setPisteet(pisteet+0.5)
-            console.log("2 voitto")
-            console.log("omat takas")
-            pyssy.play()
-        }
+        setPisteet(pisteet - 0.5);
+
+        setTimeout(() => { // Adding a small delay to ensure state update is reflected
+            if (voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2] && voittorivi[2] === voittorivi[3] && voittorivi[3] === voittorivi[4]) {
+                setPisteet(prevPisteet => prevPisteet + 100);
+                console.log("5 voitto");
+                console.log("+100 euroa");
+                pyssy.play();
+            } else if (voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2] && voittorivi[2] === voittorivi[3]) {
+                setPisteet(prevPisteet => prevPisteet + 10);
+                console.log("4 voitto");
+                console.log("+10 euroa");
+                pyssy.play();
+            } else if (voittorivi[0] === voittorivi[1] && voittorivi[1] === voittorivi[2]) {
+                setPisteet(prevPisteet => prevPisteet + 5);
+                console.log("3 voitto");
+                console.log("+5 euroa");
+                pyssy.play();
+            } else if (voittorivi[0] === voittorivi[1]) {
+                setPisteet(prevPisteet => prevPisteet + 0.5);
+                console.log("2 voitto");
+                console.log("omat takas");
+                pyssy.play();
+            }
+        }, 0);
     }
+
+
 
     return(
         <div>
@@ -167,6 +190,7 @@ const About = () => {
                         Hunter Hank's Moose of Dead
                     </h1>
                     <Toiminnallisuus/>
+                    <Musat/>
                 </div>
 
             </div>
