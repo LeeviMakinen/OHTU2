@@ -285,6 +285,6 @@ app.delete('/delete-trip/:tripName', (req, res) => {
 
 
 // Listen on port 8081
-app.listen(8081, () => {
+app.listen(8081,'0.0.0.0',  () => {
     console.log("Listening on port 8081");
 });

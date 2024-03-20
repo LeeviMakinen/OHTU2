@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import './pages.css';
+import {paikallinenIP} from "./VAIHDATÄMÄ";
 
 
 
@@ -17,13 +18,15 @@ const Blogs = () => {
         fetchPosts();
     }, []);
 
+    const tempIP = paikallinenIP;
+
     const fetchPosts = async () => {
         try {
-            const response = await axios.get('http://localhost:8081/blog-posts');
+            const response = await axios.get(tempIP+'/blog-posts');
             setPosts(response.data.map(post => ({
                 id:post.id,
                 content:post.content,
-                image: `http://localhost:8081/${post.image}`,
+                image: tempIP+`/${post.image}`,
                 created_at: post.created_at
 
             })))
@@ -52,7 +55,7 @@ const Blogs = () => {
             formData.append('content', content);
             formData.append('image', image);
 
-            const response = await axios.post('http://localhost:8081/blog-posts', formData, {
+            const response = await axios.post(tempIP+'/blog-posts', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -70,7 +73,7 @@ const Blogs = () => {
 
     const handleDeletePost = async (postId) => {
         try {
-            await axios.delete(`http://localhost:8081/blog-posts/${postId}`);
+            await axios.delete(tempIP+`/blog-posts/${postId}`);
             setImage(null);
             fetchPosts(); // Fetch updated posts after deleting
         } catch (error) {
@@ -85,7 +88,7 @@ const Blogs = () => {
             formData.append('content', editContent);
             formData.append('image', editImage);
 
-            const response = await axios.put(`http://localhost:8081/blog-posts/${editId}`, formData, {
+            const response = await axios.put(tempIP+`/blog-posts/${editId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -143,7 +146,7 @@ const Blogs = () => {
                             <div>ID: {post.id}</div>
                             <div>{post.content}</div>
 
-                            {post.image ==="http://localhost:8081/null" ?
+                            {post.image ===tempIP+"/null" ?
                                 (<p>Kuvaa ei saatavilla</p>):
                                 (<img className={"blogPostPhoto"} src={post.image} alt="reissukuva"/>)
                             }

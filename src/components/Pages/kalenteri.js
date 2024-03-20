@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './pages.css';
+import {paikallinenIP} from "./VAIHDATÄMÄ";
 function MyCalendar() {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [tripName, setTripName] = useState('');
     const [fetchedTrips, setFetchedTrips] = useState([]);
+
+
+    const tempIP = paikallinenIP;
 
     const handleDateClick = (value) => {
         if (!startDate) {
@@ -25,7 +29,7 @@ function MyCalendar() {
     }, []);
 
     const fetchTrips = () => {
-        fetch('http://localhost:8081/date_ranges')
+        fetch(tempIP+'/date_ranges')
             .then(res => res.json())
             .then(data => setFetchedTrips(data))
             .catch(err => console.log(err));
@@ -37,7 +41,7 @@ function MyCalendar() {
                 throw new Error('Please select start and end dates and enter a trip name.');
             }
 
-            const response = await fetch('http://localhost:8081/save-dates', {
+            const response = await fetch(tempIP+'/save-dates', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +81,7 @@ function MyCalendar() {
                 }
             }
 
-            const response = await fetch(`http://localhost:8081/delete-trip/${tripToDelete}`, {
+            const response = await fetch(tempIP+`/delete-trip/${tripToDelete}`, {
                 method: 'DELETE',
             });
 

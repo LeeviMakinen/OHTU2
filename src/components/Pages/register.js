@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import videotausta from "./forestvideo2.mp4";
+import {paikallinenIP} from "./VAIHDATÄMÄ";
 
 const videoURL = 'https://dl.dropboxusercontent.com/scl/fi/b8b0g14nqd150lq7jhfsv/forestvideo2.mp4?rlkey=c9ytiz1wbk64244gb4gvmjl3x&dl=0';
 const Register = () => {
@@ -11,7 +12,7 @@ const Register = () => {
 
     let sqlStatement = 'INSERT INTO tunnukset (`user`, `pass`) VALUES ("'+formData.username+'","'+formData.password+'");';
 
-
+    const tempIP = paikallinenIP;
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,7 +25,7 @@ const Register = () => {
 
     const handleSqlSend = async () => {
         try {
-            const response = await fetch('http://localhost:8081/register', {
+            const response = await fetch(tempIP+'/register', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ sqlStatement })

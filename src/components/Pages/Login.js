@@ -3,6 +3,7 @@ import "./pages.css"
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import videotausta from "./forestvideo2.mp4";
+import {paikallinenIP} from "./VAIHDATÄMÄ";
 
 const videoURL = 'https://dl.dropboxusercontent.com/scl/fi/b8b0g14nqd150lq7jhfsv/forestvideo2.mp4?rlkey=c9ytiz1wbk64244gb4gvmjl3x&dl=0';
 
@@ -11,12 +12,15 @@ const Login = ({setLoggedIn}) => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+
+    const tempIP = paikallinenIP;
+
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try {
             // Make a request to your backend login endpoint
-            const response = await axios.post("http://localhost:8081/login", {
+            const response = await axios.post(tempIP+"/login", {
                 username,
                 password,
             });
