@@ -94,7 +94,14 @@ db.connect(function (err) {
 
 app.post('/blog-posts', upload.single('image'), (req, res) => {
     const { content } = req.body;
-    const imageUrl = req.file.path; // Path to the uploaded image
+    let imageUrl = null;
+
+    if(req.file !=null){
+        imageUrl = req.file.path; // Path to the uploaded image
+
+    }
+
+
 
     const sql = 'INSERT INTO blog_posts (content, image) VALUES (?, ?)';
     db.query(sql, [content, imageUrl], (err, result) => {

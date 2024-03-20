@@ -14,7 +14,7 @@ import Lataus from "./Äänet/Lataus.mp3"
 import Pyssy from "./Äänet/Pyssy.mp3"
 import EiRahaa from "./Äänet/EiRahaa.mp3"
 import Theme from "./Äänet/theme.wav"
-
+import "../about.css";
 
 
 const Musat = () => {
@@ -181,7 +181,7 @@ const Toiminnallisuus = () => {
 }
 
 
-const About = () => {
+const Pelisali = () => {
     return (
         <div>
             <div className="container">
@@ -199,4 +199,4 @@ const About = () => {
     );
 };
 
-export default About;
+export default Pelisali;
