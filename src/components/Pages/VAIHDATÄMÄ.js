@@ -2,7 +2,9 @@ let paikallinenIP;
 
 const baseIP = "http://localhost";
 
-let vaihdettavaIP = "http://"; //Laita tämän muuttujan arvoksi oman koneen IP-osoite jos halut kokeilla sivua mobiililla, ilman tätä API-kutsut ei toimi
+let sinunIP = "";        //Laita tämän muuttujan arvoksi oman koneen IP-osoite jos halut kokeilla sivua mobiililla, ilman tätä API-kutsut ei toimi kuin localhostilla
+
+let vaihdettavaIP = "http://"+sinunIP;
 
 if (vaihdettavaIP === "http://") {
     paikallinenIP = baseIP + ":8081";
