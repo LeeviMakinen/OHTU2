@@ -89,39 +89,43 @@ const Toiminnallisuus = () => {
 
 
     function spinni() {
-        if (pisteet <= 0){
-            hirvi.play()
-        }
-        else {
-            lataus.play()
+        if (pisteet <= 0) {
+            hirvi.play();
+        } else {
+            lataus.play();
 
             const spinnausKesto = 2000;
             const spinnausFlash = 80;
-            const spinnausIntervalId = setInterval(spinniAnimaatio, spinnausFlash);
 
+            // Store initial slots
+            const initialSlots1 = [...kuvat1];
+            const initialSlots2 = [...kuvat2];
+            const initialSlots3 = [...kuvat3];
+
+            // Start spinning animation
+            const spinnausIntervalId = setInterval(spinniAnimaatio, spinnausFlash);
 
             setTimeout(() => {
                 clearInterval(spinnausIntervalId);
 
-                const newArvot1 = ([randomit(1, 11), randomit(1, 11), randomit(1, 10), randomit(1, 11), randomit(1, 11)])
-                const newArvot2 = ([randomit(1, 11), randomit(1, 11), randomit(1, 10), randomit(1, 11), randomit(1, 11)])
-                const newArvot3 = ([randomit(1, 11), randomit(1, 10), randomit(1, 11), randomit(1, 11), randomit(1, 11)])
+                // Generate new random slots
+                const newArvot1 = [randomit(1, 11), randomit(1, 11), randomit(1, 10), randomit(1, 11), randomit(1, 11)];
+                const newArvot2 = [randomit(1, 11), randomit(1, 11), randomit(1, 10), randomit(1, 11), randomit(1, 11)];
+                const newArvot3 = [randomit(1, 11), randomit(1, 10), randomit(1, 11), randomit(1, 11), randomit(1, 11)];
 
-                setArvot1(newArvot1)
-                setArvot2(newArvot2)
-                setArvot3(newArvot3)
+                setArvot1(newArvot1);
+                setArvot2(newArvot2);
+                setArvot3(newArvot3);
 
-                setKuvat1(kuvatjee(newArvot1))
-                setKuvat2(kuvatjee(newArvot2))
-                setKuvat3(kuvatjee(newArvot3))
-            },spinnausKesto)
-
-
+                // Update slots with final values
+                setKuvat1(kuvatjee(newArvot1));
+                setKuvat2(kuvatjee(newArvot2));
+                setKuvat3(kuvatjee(newArvot3));
+            }, spinnausKesto);
         }
     }
 
     function spinniAnimaatio() {
-
         const flashingImages1 = Array.from({ length: 5 }, () => getRandomImage());
         const flashingImages2 = Array.from({ length: 5 }, () => getRandomImage());
         const flashingImages3 = Array.from({ length: 5 }, () => getRandomImage());
@@ -132,8 +136,8 @@ const Toiminnallisuus = () => {
     }
 
     function getRandomImage() {
-        const slotit = [slot1,slot2,slot3,slot4,slot5,slot6,slot7,bigwin1,bigwin2,bigwin3,scatter]
-        const randomIndex = randomit(1,11);
+        const slotit = [slot1, slot2, slot3, slot4, slot5, slot6, slot7, bigwin1, bigwin2, bigwin3, scatter];
+        const randomIndex = randomit(0, 10);
         return slotit[randomIndex];
     }
 
