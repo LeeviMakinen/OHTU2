@@ -139,7 +139,7 @@ function MyCalendar() {
                     <p>Matkan alkupäivä: {startDate ? startDate.toDateString() : 'None'}</p>
                     <p>Ja millon tullaan takaisin?: {endDate ? endDate.toDateString() : 'None'}</p>
                 </div>
-                <Calendar
+                <Calendar className={"react-calendar"}
                     onClickDay={handleDateClick}
                     tileClassName={tileClassName}
                 />
