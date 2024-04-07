@@ -5,14 +5,18 @@ import {paikallinenIP} from "./VAIHDATÄMÄ";
 
 
 
+
 const Blogs = () => {
     const [content, setContent] = useState('');
-    const [image, setImage] = useState(null); // Added state for image
+    const [image, setImage] = useState(null);
     const [posts, setPosts] = useState([]);
     const [editId, setEditId] = useState('');
     const [editContent, setEditContent] = useState('');
     const [editImage, setEditImage] = useState(null);
     const [isAddingNewPost, setIsAddingNewPost] = useState(false);
+
+
+
 
     useEffect(() => {
         fetchPosts();
@@ -23,17 +27,54 @@ const Blogs = () => {
     const fetchPosts = async () => {
         try {
             const response = await axios.get(tempIP+'/blog-posts');
-            setPosts(response.data.map(post => ({
-                id:post.id,
-                content:post.content,
-                image: tempIP+`/${post.image}`,
-                created_at: post.created_at
-
-            })))
+            const postsWithImages = await Promise.all(response.data.map(async post => {
+                // Vedä kuvat
+                if (post.image) {
+                    try {
+                        const imageResponse = await fetch(post.image);
+                        const blob = await imageResponse.blob();            //kiertoreitti niin ei tarvitse käyttä buffereita
+                        const imageDataURL = await getBase64FromBlob(blob);
+                        return {
+                            id: post.id,
+                            content: post.content,
+                            image: imageDataURL,
+                            created_at: post.created_at
+                        };
+                    } catch (error) {
+                        console.error('Häiriö kuvan lataamisessa:', error);
+                        return {
+                            id: post.id,
+                            content: post.content,
+                            image: null,
+                            created_at: post.created_at
+                        };
+                    }
+                } else {
+                    return {
+                        id: post.id,
+                        content: post.content,
+                        image: null,
+                        created_at: post.created_at
+                    };
+                }
+            }));
+            setPosts(postsWithImages);
             console.log(response.data);
         } catch (error) {
-            console.error('Error fetching blog posts:', error);
+            console.error('Blogipostauksien lataus epäonnistui: ', error);
         }
+    };
+
+// Blobista base64
+    const getBase64FromBlob = (blob) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                resolve(reader.result);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
     };
 
     const handleContentChange = (e) => {
@@ -41,7 +82,9 @@ const Blogs = () => {
     };
 
     const handleImageChange = (e) => {
+
         setImage(e.target.files[0]); // Hoida kuvan muutos
+
     };
     const handleEditImageChange = (e) => {
         setEditImage(e.target.files[0]); // Hoida kuvan muutos
@@ -50,18 +93,15 @@ const Blogs = () => {
 
 
     const handleSavePost = async () => {
+
         try {
             const formData = new FormData();
-            formData.append('content', content);
             formData.append('image', image);
+            formData.append('content', content);
 
-            const response = await axios.post(tempIP+'/blog-posts', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+            const response = await fetch(tempIP+`/blog-posts`,{
+                method: 'POST',body:formData,
             });
-
-
             setContent(''); // Clear the text field after saving
             setImage(null); // Clear the image state after saving
             setIsAddingNewPost(false);
@@ -131,7 +171,7 @@ const Blogs = () => {
                />
                     <div className="blog-form">
                     <label className={"uploadtext"} htmlFor="uploadbox">Lisää kuva</label>
-                    <input style={{visibility: "hidden"}} id="uploadbox" type="file" onChange={handleImageChange}/>
+                    <input style={{visibility: "hidden"}} id="uploadbox" type="file"  onChange={handleImageChange}/>
                     <button className={"uploadtext"} onClick={handleSavePost}>Tallenna</button>
                     </div>
                 </div>

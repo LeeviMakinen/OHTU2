@@ -4,12 +4,15 @@ const mysql = require('mysql');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+const {Dropbox} = require("dropbox");
+const fs = require('fs');
+const {response} = require("express");
 
 
 
 
 const app = express();
-
+const AuthToken = 'sl.By522jwa8QH1Ea0Q19NlwenjMmR2LBvfqmcU14DK33bwT48xHrV8JbEbr59d7t84bxs7EHoLiPOlGkXHT44NXN_436lKBQgBgx24Cg8icsGGL9NVPoUGKf1NSUmrHY2dY5bvffbou83rnFg'; //Jos ette tätä jakas kiitos
 
 app.use(cors());
 app.use(express.json());
@@ -20,9 +23,13 @@ app.use('/backend/uploads', express.static(path.join(__dirname, 'uploads')));
 const db = mysql.createConnection({
     host: "localhost",
     user: 'root',
-    password: 'Hur1ssalon5ale', // Salis :D:D:D:D:
+    password: 'A', // Salis :D:D:D:D:
     database: 'testi'
 });
+
+const dbx = new Dropbox({accessToken: AuthToken});
+
+
 
 /*
 -- Create database if it doesn't exist
@@ -70,10 +77,10 @@ INSERT INTO ukot (Nimi, Osumia_kaveriin) VALUES ('Seppo', 40);
 // Configure Multer for file backend/uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'backend/uploads/'); // Specify the destination directory for uploaded files
+        cb(null, 'backend/uploads/'); // Tänne kuvat paikallisesti
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname); // Use the original filename for uploaded files
+        cb(null, file.originalname); // Käytä oikeaa nimeä
     }
 });
 const upload = multer({ storage: storage });
@@ -88,31 +95,94 @@ db.connect(function (err) {
     else console.log("Database connected");
 });
 
-// Endpoint to save a new blog post
 
 
 
-app.post('/blog-posts', upload.single('image'), (req, res) => {
-    const { content } = req.body;
-    let imageUrl = null;
 
-    if(req.file !=null){
-        imageUrl = req.file.path; // Path to the uploaded image
 
+
+app.post('/upload', upload.single('image'), async (req, res) => {
+    try {
+        const fileContent = req.file.buffer;
+        const fileName = req.file.originalname;
+
+        const response = await dbx.filesUpload({
+            path: '/images/' + fileName,
+            contents: fileContent,
+            mode: { '.tag': 'overwrite' },
+        });
+
+        const { path_lower, id } = response.result;
+        const url = await dbx.sharingCreateSharedLinkWithSettings({
+            path: path_lower,
+        });
+
+        console.log('File uploaded to Dropbox:', response);
+
+        res.status(200).json({
+            message: 'File uploaded successfully',
+            fileUrl: url.result.url,
+        });
+    } catch (error) {
+        console.error('Error uploading file to Dropbox:', error);
+        res.status(500).json({ error: 'Failed to upload file' });
     }
-
-
-
-    const sql = 'INSERT INTO blog_posts (content, image) VALUES (?, ?)';
-    db.query(sql, [content, imageUrl], (err, result) => {
-        if (err) {
-            console.error('Error saving blog post:', err);
-            res.status(500).json({ success: false, message: 'Internal server error' });
-        } else {
-            res.status(201).json({ success: true, message: 'Blog post created successfully' });
-        }
-    });
 });
+
+
+
+function EditDropboxSharedLink(sharedLink) {        //Muokkaa dropboxin API:n linkin suoraan reactissa käytettäväksi
+
+    if (sharedLink.startsWith('https://www.dropbox.com/scl/')) {
+        // Extract the path from the shared link
+        const path = sharedLink.replace('https://www.dropbox.com/scl/', '');
+
+
+        return `https://dl.dropboxusercontent.com/scl/${path}`;
+    } else {
+
+        return sharedLink;
+    }
+}
+
+
+
+app.post('/blog-posts', upload.single('image'), async (req, res) => {
+    const { content } = req.body;
+
+    try {
+        let imageUrl = null;
+
+        if (req.file != null) {
+            const fileContent = fs.readFileSync(req.file.path);
+
+            //Filu dropboxiin
+            const response = await dbx.filesUpload({
+                path: '/images/' + req.file.originalname,
+                contents: fileContent
+            });
+
+            // Jakolinkki kuvan näyttämistä varten
+            const sharedLink = await dbx.sharingCreateSharedLinkWithSettings({ path: response.result.path_display });
+            imageUrl = EditDropboxSharedLink(sharedLink.result.url);
+        }
+
+        // Postaus tietokantaan, kuvan url on dropboxista saatu
+        const sql = 'INSERT INTO blog_posts (content, image) VALUES (?, ?)';
+        db.query(sql, [content, imageUrl], (err, result) => {
+            if (err) {
+                console.error('Error saving blog post:', err);
+                res.status(500).json({ success: false, message: 'Internal server error' });
+            } else {
+                res.status(201).json({ success: true, message: 'Blog post created successfully' });
+            }
+        });
+    } catch (error) {
+        console.error('Error uploading file to Dropbox:', error);
+        res.status(500).send('Failed to upload file to Dropbox');
+    }
+});
+
 
 
 // Postauksen päivityksen endpoint
