@@ -12,7 +12,7 @@ const {response} = require("express");
 
 
 const app = express();
-const AuthToken = 'sl.By522jwa8QH1Ea0Q19NlwenjMmR2LBvfqmcU14DK33bwT48xHrV8JbEbr59d7t84bxs7EHoLiPOlGkXHT44NXN_436lKBQgBgx24Cg8icsGGL9NVPoUGKf1NSUmrHY2dY5bvffbou83rnFg'; //Jos ette tätä jakas kiitos
+const AuthToken = ''; //Jos ette tätä jakas kiitos
 
 app.use(cors());
 app.use(express.json());
